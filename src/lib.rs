@@ -25,3 +25,4 @@ fn init(_url: Url, _orders: &mut impl Orders<Msg>) -> Model {
 pub fn start() {
     App::start("app", init, update, view);
 }
+
