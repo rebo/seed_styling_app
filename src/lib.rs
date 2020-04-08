@@ -147,7 +147,7 @@ fn conveinience_styled_counter() -> Node<Msg> {
     
     div![
         div_style,
-        h3!["CSS Styled Counter"],
+        h3!["Styled with shorter conveinience methods Counter"],
 
         p![
             p_style,
