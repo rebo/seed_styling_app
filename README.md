@@ -1,4 +1,41 @@
-# Seed Quickstart
+# Seed Styling Example App
+
+**Intro**
+
+**You need to be using recent nightly! i.e. at least from 4th April 2020**
+
+A base app for a proposed Seed Style System.
+
+This is very much alpha and there are quite a few missing methods or properties such as `active()` (just need to add them!).
+
+Simply 
+
+```
+use seed_hooks::*;
+use seed_hooks::style::*;
+```
+
+And begin to define styles like this: 
+
+```rust
+div![ S.background_color("red").padding("8px").font_size("20px"), "Hello"]
+```
+
+Navigating to root wil demonstrate the following ways of using the style system:
+
+```
+unstyled_counter(),
+basic_styled_counter(),
+css_styled_counter(),
+conveinience_styled_counter(),
+tw_styled_counter(),
+hover_counter(),
+media_query_counter(),
+variant_counter(),
+themed_counter(),
+styles_on_args_counter(S.bg_indigo_600().font_size("20px")),
+```
+
 
 **To get started:**
 
