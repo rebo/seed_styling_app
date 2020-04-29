@@ -1,0 +1,154 @@
+
+#[derive(Default, Debug, Clone)]
+struct Model {
+    photos: Vec<Photo>,
+    destinations: Vec<Destination>,
+    selected_destination_idx: Option<u32>,
+}
+
+#[derive(Default, Debug, Clone)]
+struct Photo {
+    title: String,
+    description: String,
+}
+
+#[derive(Default, Debug, Clone)]
+struct Destination {
+    title: String,
+    description: String,
+    photo_idxs: Vec<usize>,
+}
+
+
+let rome = Destination{
+    title: "Rome".to_string(),
+    description: "Rome is the capital city and a special comune of Italy as well as the capital of the Lazio region.".to_string(),
+    photo_idxs: vec![0,1,2,3,4,5],
+};
+
+let rome_photos = vec![
+    Photo {
+        title: "Rome 0",
+        description: "A View of Rome No. 0",
+    },
+    Photo {
+        title: "Rome 1",
+        description: "A View of Rome No. 1",
+    },
+    Photo {
+        title: "Rome 2",
+        description: "A View of Rome No. 2",
+    },
+    Photo {
+        title: "Rome 3",
+        description: "A View of Rome No. 3",
+    },
+    Photo {
+        title: "Rome 4",
+        description: "A View of Rome No. 4",
+    },
+    Photo {
+        title: "Rome 5",
+        description: "A View of Rome No. 5",
+    },
+];
+
+let london = Destination {
+    title: "London".to_string(),
+    description: "London is the capital and largest city of England and the United Kingdom."
+        .to_string(),
+    photo_idxs: vec![6, 7, 8, 9, 10],
+};
+
+let london_photos = vec![
+    Photo {
+        title: "london 0",
+        description: "A View of london No. 0",
+    },
+    Photo {
+        title: "london 1",
+        description: "A View of london No. 1",
+    },
+    Photo {
+        title: "london 2",
+        description: "A View of london No. 2",
+    },
+    Photo {
+        title: "london 3",
+        description: "A View of london No. 3",
+    },
+    Photo {
+        title: "london 4",
+        description: "A View of london No. 4",
+    },
+    Photo {
+        title: "london 5",
+        description: "A View of london No. 5",
+    },
+];
+
+let newyork = Destination{
+    title: "New York".to_string(),
+    description: "New York City (NYC), often called the City of New York or simply New York (NY), is the most populous city in the United States".to_string(),
+    photo_idxs: vec![11,12,13,14,15],
+};
+
+let newyork_photos = vec![
+    Photo {
+        title: "New York 0",
+        description: "A View of New York No. 0",
+    },
+    Photo {
+        title: "New York 1",
+        description: "A View of New York No. 1",
+    },
+    Photo {
+        title: "New York 2",
+        description: "A View of New York No. 2",
+    },
+    Photo {
+        title: "New York 3",
+        description: "A View of New York No. 3",
+    },
+    Photo {
+        title: "New York 4",
+        description: "A View of New York No. 4",
+    },
+    Photo {
+        title: "New York 5",
+        description: "A View of New York No. 5",
+    },
+];
+
+let mut photos = rome_photos.append(london_photos).append(newyork_photos);
+
+Model {
+    destinations: vec![london, rome, newyork],
+    photos: photos,
+    selected_destination_idx: None,
+}
+
+  // div![
+    //     S.bg_color(seed_colors::Gray::No7)
+    //     .display_flex().justify_content_center(),
+    //     div![
+    //         S.box_sizing_border_box()
+    //           .padding_left(&[px(20),px(40)]) // use a smaller horinzontal padding in the first brakepoint
+    //           .pr(&[px(20),px(40)]) // use a smaller horinzontal padding in the first brakepoint
+    //           .pt(&[px(4),px(8)]) // use a smaller vertical padding in the first brakepoint
+    //           .pb(&[px(4),px(8)]) // use a smaller vertical padding in the first brakepoint
+    //           .mt(&[px(10),px(24)])
+    //           .mb(&[px(10),px(24)])
+    //           .h(pc(80.))
+    //           .border_radius(px(4))
+    //           .bb_style_solid()
+    //           .bb_width(&[px(2), px(4)])
+    //           .b_color(seed_colors::Gray::No6),
+    //         //   .bg_color(seed_colors::Gray::No6),
+    //         h1![
+    //             S.font_size(3) // use the third font size in the font_size scale
+    //             .color(seed_colors::Base::White)
+    //             .font_family("'Roboto',sans-serif"),
+    //             "BraveTraveller"]
+    //     ]
+    // ]
