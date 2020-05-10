@@ -38,7 +38,7 @@ fn view(_model: &Model) -> impl IntoNodes<Msg> {
         media_query_counter(),
         variant_counter(),
         themed_counter(),
-        styles_on_args_counter(S.bg_indigo_600().font_size(
+        styles_on_args_counter(s().bg_indigo_600().font_size(
             seed_hooks::style::CssFontSize::StringValue("32px".to_string())
         )),
     ]
@@ -60,12 +60,17 @@ fn basic_styled_counter() -> Node<Msg> {
     div![
         h3!["Basic Styled Counter"],
         // simple 'inline' defined styles with long property methods
-        S.padding("4px")
+        s().padding("4px")
             .margin("2px")
             .display(CssDisplay::InlineBlock),
-        p![S.margin_top("4px"), "You have clicked ", counter, " times",],
+        p![
+            s().margin_top("4px"),
+            "You have clicked ",
+            counter,
+            " times",
+        ],
         button![
-            S.padding_x("24px")
+            s().padding_x("24px")
                 .padding_y("8px")
                 .margin("2px")
                 .background_color("teal")
@@ -80,7 +85,7 @@ fn basic_styled_counter() -> Node<Msg> {
 fn css_styled_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let div_style = S.css(
+    let div_style = s().css(
         r#"
         font-family: verdana;
         font-size: 20px;
@@ -90,14 +95,14 @@ fn css_styled_counter() -> Node<Msg> {
     "#,
     );
 
-    let p_style = S.css(
+    let p_style = s().css(
         r#"
         margin-top: 4px;
         display: inline-block;
     "#,
     );
 
-    let button_style = S.css(
+    let button_style = s().css(
         r#"
         border-radius: 4px;
         background-color: #DB3080;
@@ -122,9 +127,9 @@ fn css_styled_counter() -> Node<Msg> {
 fn conveinience_styled_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let div_style = S.p("4px").m("2px");
+    let div_style = s().p("4px").m("2px");
 
-    let p_style = S.mt("4px").display(CssDisplay::InlineBlock);
+    let p_style = s().mt("4px").display(CssDisplay::InlineBlock);
 
     let button_style = S
         .border_radius(CssBorderRadius::Length(px(2)))
@@ -150,16 +155,16 @@ fn tw_styled_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
     div![
-        S.p_1().m_1(),
+        s().p_1().m_1(),
         h3!["TW Styled Counter"],
         p![
-            S.mt_1().inline_block(),
+            s().mt_1().inline_block(),
             "You have clicked ",
             counter,
             " times",
         ],
         button![
-            S.bg_red_600().text_white().px_10().py_4().m_4(),
+            s().bg_red_600().text_white().px_10().py_4().m_4(),
             "Increment Counter",
             counter.on_click(|v| *v += 1)
         ]
@@ -169,15 +174,15 @@ fn tw_styled_counter() -> Node<Msg> {
 fn hover_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let button_style = S.bg_red_600().text_white().px_10().py_4().m_4();
+    let button_style = s().bg_red_600().text_white().px_10().py_4().m_4();
 
-    let hover_style = S.hover().bg_green_400();
+    let hover_style = s().hover().bg_green_400();
 
     div![
-        S.p_1().m_1(),
+        s().p_1().m_1(),
         h3!["Hover Styled Counter"],
         p![
-            S.mt_1().inline_block(),
+            s().mt_1().inline_block(),
             "You have clicked ",
             counter,
             " times",
@@ -193,17 +198,17 @@ fn hover_counter() -> Node<Msg> {
 fn media_query_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let button_style = S.bg_red_600().text_white().px_10().py_4().m_4();
+    let button_style = s().bg_red_600().text_white().px_10().py_4().m_4();
 
     let media_query = S
         .media("@media only screen and (max-width: 600px)")
         .bg_green_400();
 
     div![
-        S.p_1().m_1(),
+        s().p_1().m_1(),
         h3!["Media Query Styled Counter - shrink width to less than 600px"],
         p![
-            S.mt_1().inline_block(),
+            s().mt_1().inline_block(),
             "You have clicked ",
             counter,
             " times",
@@ -219,16 +224,16 @@ fn media_query_counter() -> Node<Msg> {
 fn variant_counter() -> Node<Msg> {
     let danger = use_state(|| false);
     let counter = use_state(|| 0);
-    let base_button_style = S.bg_blue_600().text_white().px_10().py_4().m_4();
+    let base_button_style = s().bg_blue_600().text_white().px_10().py_4().m_4();
 
     let danger_style = base_button_style.bg_red_700();
     let ok_style = base_button_style.bg_green_500();
 
     div![
-        S.p_1().m_1(),
+        s().p_1().m_1(),
         h3!["Variants of Styles"],
         p![
-            S.mt_1().inline_block(),
+            s().mt_1().inline_block(),
             "You have clicked ",
             counter,
             " times",
@@ -265,16 +270,16 @@ fn themed_counter() -> Node<Msg> {
 
     div![
         use_theme(pink_theme, || div![
-            S.p_1().m_1(),
+            s().p_1().m_1(),
             h3!["With Theme"],
             p![
-                S.mt_1().inline_block(),
+                s().mt_1().inline_block(),
                 "You have clicked ",
                 counter,
                 " times",
             ],
             button![
-                S.color((Color::Secondary, rgba(0.0, 0.0, 0.0, 0.0))) // Padding will take the 3rd space theme value, or 10px if not present
+                s().color((Color::Secondary, rgba(0.0, 0.0, 0.0, 0.0))) // Padding will take the 3rd space theme value, or 10px if not present
                     .m("8px") // Margin will take the 2nd space theme value, or 8px if not present
                     .bg_color((Color::Primary, rgba(0.0, 0.0, 0.0, 0.0))) // The primary color value, or "red" if not present
                     .color("white")
@@ -285,16 +290,16 @@ fn themed_counter() -> Node<Msg> {
             ]
         ]),
         div![
-            S.p_1().m_1(),
+            s().p_1().m_1(),
             h3!["Without Theme"],
             p![
-                S.mt_1().inline_block(),
+                s().mt_1().inline_block(),
                 "You have clicked ",
                 counter,
                 " times",
             ],
             button![
-                S.p("10px") // Padding will take the 3rd space theme value, or 10px if not present
+                s().p("10px") // Padding will take the 3rd space theme value, or 10px if not present
                     .m("8px") // Margin will take the 2nd space theme value, or 8px if not present
                     .bg_color("primary") // The primary color value, or "red" if not present
                     .color("white")
@@ -310,13 +315,13 @@ fn themed_counter() -> Node<Msg> {
 fn styles_on_args_counter(user_style: seed_hooks::style::Style) -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let button_style = S.bg_red_600().text_white().px_10().py_4().m_4();
+    let button_style = s().bg_red_600().text_white().px_10().py_4().m_4();
 
     div![
-        S.p_1().m_1(),
+        s().p_1().m_1(),
         h3!["Style From Arguments"],
         p![
-            S.mt_1().inline_block(),
+            s().mt_1().inline_block(),
             "You have clicked ",
             counter,
             " times",

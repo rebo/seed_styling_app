@@ -1,5 +1,4 @@
-use crate::{Model, Msg};
-use seed_style::measures::{pc, px};
+use seed_style::measures::px;
 use seed_style::*;
 // Theme Definition
 // -----------------
@@ -25,8 +24,12 @@ use seed_style::*;
 // // Main Color Theme Keys
 #[derive(Hash, PartialEq, Eq, Clone)]
 pub enum Color {
+    Background,
+    MainText,
     Primary,
+    MutedPrimary,
     DarkPrimary,
+    MutedSecondary,
     Secondary,
     DarkSecondary,
     Highlight,
@@ -74,13 +77,67 @@ impl BreakpointTheme for Breakpoint {} // Enable `Breakpoint` as a Breakpoint al
 // A different function could provide a completely different theme
 // For instance a dark mode theme.
 
+pub fn dark_theme() -> Theme {
+    use Breakpoint::*;
+
+    // I generally set the named aliases seperately from the theme scales:
+    let theme = Theme::new()
+        .set_color(Color::Background, CssColor::Hex(0x333333))
+        .set_color(Color::MainText, CssColor::Hex(0xDDDDDD))
+        .set_color(Color::Primary, CssColor::Hsl(300.0, 85.0, 45.0))
+        .set_color(Color::MutedPrimary, CssColor::Hsl(300.0, 70.0, 90.0))
+        .set_color(Color::Secondary, hsl(200, 60, 40)) // or use the hsl shortcut
+        .set_color(Color::MutedSecondary, hsl(200, 15, 30)) // or use the hsl shortcut
+        .set_color(Color::Highlight, hsl(10, 70, 85))
+        .set_color(Color::DarkPrimary, hsl(200, 70, 35))
+        .set_color(Color::DarkSecondary, hsl(300, 60, 20))
+        .set_breakpoint(ExtraSmall, (0, Some(600))) // Breakpoints are upper bound exclusive lower bound inclusive.
+        .set_breakpoint(Small, (600, Some(960)))
+        .set_breakpoint(Medium, (960, Some(1280)))
+        .set_breakpoint(Large, (1280, Some(1920)))
+        .set_breakpoint(ExtraLarge, (1920, None));
+
+    // other aliases you can set include :
+    // color, space, size, font_size, font, border, border_width, border_style, border_radius, transition
+    // line_height, letter_spacing,
+
+    //scales
+    // https://styled-system.com/guides/array-scales/
+    let theme = theme
+        .border_width_scale(&[px(2), px(4), px(8), px(12), px(16), px(24), px(32)])
+        .space_scale(&[px(2), px(4), px(8), px(12), px(16), px(24), px(32)])
+        .size_scale(&[px(1), px(2), px(4)])
+        .font_size_scale(&[px(14), px(18), px(20), px(36)])
+        .breakpoint_scale([600, 960, 1280, 1920]); // standard-material-ui breakpoints
+
+    theme.set_global_styles(
+        GlobalStyle::default()
+            .style(
+                "a,div,p,h1,h2,h3,h4,li,dd,dt,button,label,input",
+                s().font_family("'Lato',sans-serif")
+                    .webkit_font_smoothing_antialiased(),
+            )
+            .style(
+                "body",
+                s().bg_color(CssColor::Hex(0x333333))
+                    .color(CssColor::Hex(0xDDDDDD)),
+            ),
+    )
+    // Other scales you can set are :
+    // sizes_scale, spaces_scale, borders_scale, font_sizes_scale, border_widths_scale, border_styles_scale, radii_scale, colors_scale, shadows_scale,
+}
+
 pub fn my_theme() -> Theme {
     use Breakpoint::*;
 
     // I generally set the named aliases seperately from the theme scales:
     let theme = Theme::new()
-        .set_color(Color::Primary, CssColor::Hsl(200.0, 70.0, 80.0))
-        .set_color(Color::Secondary, hsl(300, 60, 50)) // or use the hsl shortcut
+        .set_color(Color::Background, CssColor::Hex(0xFFFFFF))
+        .set_color(Color::MainText, CssColor::Hex(0x000000))
+        .set_color(Color::Primary, CssColor::Hsl(100.0, 70.0, 40.0))
+        .set_color(Color::MutedPrimary, CssColor::Hsl(100.0, 70.0, 90.0))
+        .set_color(Color::Secondary, CssColor::Hex(0xF6AD55)) // or use the hsl shortcut
+        .set_color(Color::MutedSecondary, CssColor::Hex(0xFEEBC8)) // or use the hsl shortcut
         .set_color(Color::Highlight, hsl(310, 70, 85))
         .set_color(Color::DarkPrimary, hsl(200, 70, 35))
         .set_color(Color::DarkSecondary, hsl(300, 60, 20))
@@ -96,11 +153,26 @@ pub fn my_theme() -> Theme {
 
     //scales
     // https://styled-system.com/guides/array-scales/
-    theme
-        .space_scale(&[px(2), px(4), px(8), px(16), px(32)])
+    let theme = theme
+        .border_width_scale(&[px(2), px(4), px(8), px(12), px(16), px(24), px(32)])
+        .space_scale(&[px(2), px(4), px(8), px(12), px(16), px(24), px(32)])
+        .size_scale(&[px(1), px(2), px(4)])
         .font_size_scale(&[px(14), px(18), px(20), px(36)])
-        .breakpoint_scale([600, 960, 1280, 1920]) // standard-material-ui breakpoints
+        .breakpoint_scale([600, 960, 1280, 1920]); // standard-material-ui breakpoints
 
+    theme.set_global_styles(
+        GlobalStyle::default()
+            .style(
+                "a,div,p,h1,h2,h3,h4,li,dd,dt,button,label,input",
+                s().font_family("'Lato',sans-serif")
+                    .webkit_font_smoothing_antialiased(),
+            )
+            .style(
+                "body",
+                s().bg_color(CssColor::Hex(0xFFFFFF))
+                    .color(CssColor::Hex(0x000000)),
+            ),
+    )
     // Other scales you can set are :
     // sizes_scale, spaces_scale, borders_scale, font_sizes_scale, border_widths_scale, border_styles_scale, radii_scale, colors_scale, shadows_scale,
 }

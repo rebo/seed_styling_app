@@ -18,7 +18,7 @@ use seed_hooks::style::*;
 And begin to define styles like this: 
 
 ```rust
-div![ S.background_color("red").padding("8px").font_size("20px"), "Hello"]
+div![ s().background_color("red").padding("8px").font_size("20px"), "Hello"]
 ```
 
 Navigating to root wil demonstrate the following ways of using the style system:
@@ -33,7 +33,7 @@ hover_counter(),
 media_query_counter(),
 variant_counter(),
 themed_counter(),
-styles_on_args_counter(S.bg_indigo_600().font_size("20px")),
+styles_on_args_counter(s().bg_indigo_600().font_size("20px")),
 ```
 
 

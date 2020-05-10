@@ -1,102 +1,75 @@
 use crate::{Model, Msg};
 use seed::{prelude::*, *};
 use seed_hooks::*;
-use seed_style::measures::{px, rem};
+use seed_style::measures::px;
 use seed_style::*;
+use crate::theme::*;
 
 #[topo::nested]
-pub fn view(_model: &Model) -> Node<Msg> {
+pub fn view(model: &Model) -> Node<Msg> {
+    Composition::with_layout(
+        Breakpoint::ExtraSmall,
+        layout_grid(s().grid_template_columns("1fr minmax(400px,1000px) 1fr")),
+    )
+    .add_child(|_model: &Model| 
     div![
-        S.line_height(CssLineHeight::Number(1.6))
-            .letter_spacing(rem(-0.00278)),
-        S.if_nested_style("p code")
-            .font_size(px(14))
-            .my(px(2))
-            .display_inline_block()
-            .radius(px(3))
-            .bg_color(seed_colors::Gray::No3)
-            .py(px(2))
-            .px(px(4)),
-        S.if_direct_child_style("div")
-            .display_flex()
-            .flex_direction_column(),
-        S.if_nested_style("button")
-            .align_self_center()
-            .outline_style_none(),
-        S.if_nested_style("h3")
-            .box_sizing_border_box()
-            .font_family("roboto, Arial, sans-serif")
-            .font_weight_v700()
-            .b_style_solid()
-            .bb_width(px(3))
-            .b_color(seed_colors::Gray::No4)
-            .display_block()
-            .px(px(12))
-            .py(px(8))
-            .mb(px(4))
-            .font_size(px(24)),
-        S.if_nested_style("p")
-            .font_family("Arial,x-locale-body,sans-serif")
-            .webkit_font_smoothing_antialiased()
-            .box_sizing_border_box()
-            .display_block()
-            .px(px(12))
-            .py(px(8))
-            .mx(px(8))
-            .mb(px(4))
-            .font_size(px(16)),
-        S.if_nested_style("pre")
-            .bg_color(seed_colors::Orange::No1)
-            .b_style_dotted()
-            .overflow_x_auto()
-            .b_width(px(4))
-            .b_color(seed_colors::Orange::No4)
-            .box_sizing_border_box()
-            .display_block()
-            .px(px(16))
-            .py(px(12))
-            .mx(px(16))
-            .my(px(8))
-            .radius(px(5))
-            .font_size(px(18)),
+        s().grid_column_start("2")
+        .grid_column_end("3")
+        .padding_x(3)
+        .padding_y(2),
+        
+            h3!["Introduction"],
+            p!["This page demonstrates the use of SeedStyle to style various buttons.  Concepts such as pseudo classes, media queries, and variants are covered."],
+        
         unstyled_counter(),
-        // (0..500).map(|_| basic_styled_counter()),
         basic_styled_counter(),
         css_styled_counter(),
         conveinience_styled_counter(),
         hover_counter(),
         media_query_counter(),
         variant_counter(),
-        themed_counter(),
-        styles_on_args_counter(S.bg_color(seed_colors::Indigo::No5).font_size(px(24))),
+        styles_on_args_counter(s().bg_color(seed_colors::Indigo::No5).font_size(px(24))),
     ]
+    ).render(model)
 }
 
 fn unstyled_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
     div![
-        h3!["Unstyled counter"],
+        h3!["Unstyled Button"],
         md![
-            r#"This is a basic unstyled button, it uses seed hooks to store state with `use_state(|| 0)`.
-            The counter is incremented with `counter.on_click(|v| *v += 1)` which creates an `Ev::OnClick` EventHandler.
-        "#
+            r#"This is a unstyled button, it uses seed hooks to store state with `use_state(|| 0)`.
+                The counter is incremented with `counter.on_click(|v| *v += 1)` which creates an `Ev::OnClick` EventHandler.
+```
+let counter = use_state(|| 0);
+button![
+    "Clicked (", counter, ") times",
+    counter.on_click(|v| *v += 1; )
+]
+```                
+            "#
         ],
-        p!["You have clicked ", counter, " times",],
-        button!["Increment Counter", counter.on_click(|v| *v += 1)]
+        button![
+            "Clicked (",
+            counter,
+            ") times",
+            counter.on_click(|v| {
+                *v += 1;
+            })
+        ]
     ]
 }
-
+#[topo::nested]
 fn basic_styled_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
-
     div![
-        h3!["Basic Styled Counter"],
+        h3!["Basic Styled Button"],
         md![
-            r#"This is a basic styled button, the button is styled with the following
+            r#"This is a basic styled button, the button is styled with the following:
 
-```
-S.padding_left(px(24))
+```rust
+s().padding_left(px(24))
     .padding_right(px(24))
     .padding_top(px(8))
     .padding_bottom("8px")
@@ -121,12 +94,11 @@ spotted if I had thorouly checked the resultant page and css for a property that
 See `css_values.rs` for a complete list of properties and values available.
        "#
         ],
-        S.padding("4px")
+        s().padding("4px")
             .margin("2px")
             .display(CssDisplay::InlineBlock),
-        p![S.margin_top("4px"), "You have clicked ", counter, " times",],
         button![
-            S.padding_left(px(24))
+            s().padding_left(px(24))
                 .padding_right(px(24))
                 .padding_top(px(8))
                 .padding_bottom(px(8))
@@ -136,8 +108,10 @@ See `css_values.rs` for a complete list of properties and values available.
                 .color("white")
                 .outline_style(CssOutlineStyle::None)
                 .display(CssDisplay::InlineBlock),
-            "Increment Counter",
-            counter.on_click(|v| *v += 1)
+            "Clicked (",
+            counter,
+            ") times",
+            counter.on_click(move |v| *v += 1)
         ]
     ]
 }
@@ -145,21 +119,14 @@ See `css_values.rs` for a complete list of properties and values available.
 fn css_styled_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let div_style = S.raw(
+    let div_style = s().raw(
         r#"
         padding: 4px;
         margin: 2px;
     "#,
     );
 
-    let p_style = S.raw(
-        r#"
-        margin-top: 4px;
-        display: inline-block;
-    "#,
-    );
-
-    let button_style = S.raw(
+    let button_style = s().raw(
         r#"
         font-family: verdana;
         font-size: 20px;
@@ -174,12 +141,12 @@ fn css_styled_counter() -> Node<Msg> {
 
     div![
         div_style,
-        h3!["Raw CSS Styled Counter"],
+        h3!["Raw CSS Styled Button"],
         md![
-            r##"This is a button styled with css direcrly using the `.raw()` method.  We can include any css we want. In this case we have used:
+            r##"This is a button styled with css direcrly using the `.raw()` method.  We can include any css that can be used inside a style block. In this case we have used:
 
-```
-S.raw(
+```rust
+s().raw(
     r#"
     font-family: verdana;
     font-size: 20px;
@@ -198,10 +165,11 @@ so that any issues can be prevented at compile time.
 
        "##
         ],
-        p![p_style, "You have clicked ", counter, " times",],
         button![
             button_style,
-            "Increment Counter",
+            "Clicked (",
+            counter,
+            ") times",
             counter.on_click(|v| *v += 1)
         ]
     ]
@@ -210,11 +178,9 @@ so that any issues can be prevented at compile time.
 fn conveinience_styled_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let div_style = S.p("4px").m("2px");
+    let div_style = s().p("4px").m("2px");
 
-    let p_style = S.mt("4px").display(CssDisplay::InlineBlock);
-
-    let button_style = S
+    let button_style = s()
         .radius(px(2))
         .bg_color(hsl(40, 70, 30))
         .color("white")
@@ -228,7 +194,7 @@ fn conveinience_styled_counter() -> Node<Msg> {
         h3!["Styled with shorter conveinience methods"],
         md![
             r#"There are conviencience methods available  in order to make defining styles more efficient.
-For instance `pl()` for `padding-left()`. Horizontal/ vertical padding and margins can be set with `.mx()`, 'py()` etc.
+For instance `pl()` for `padding-left()`. Horizontal/ vertical padding and margins can be set with `.mx()`, `py()` etc.
 
 Furthermore all properties with single variant values can be set by appending the value name to the property method.
 
@@ -238,9 +204,10 @@ Similarly, `.flex_direction_column()` will call `.flex_direction(CssFlexDirectio
 
 See `css_values.rs` for more information.
 
-Here is an example of some shortcuts.
-```
-S.radius(px(2))
+Here is an example of some shortcuts:
+
+```rust
+s().radius(px(2))
     .bg_color(hsl(40,70,30))
     .color("white")
     .px(px(16))
@@ -250,10 +217,11 @@ S.radius(px(2))
 ```
        "#
         ],
-        p![p_style, "You have clicked ", counter, " times",],
         button![
             button_style,
-            "Increment Counter",
+            "Clicked (",
+            counter,
+            ") times",
             counter.on_click(|v| *v += 1)
         ]
     ]
@@ -262,7 +230,7 @@ S.radius(px(2))
 fn hover_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let button_style = S
+    let button_style = s()
         .bg_color(hsl(200, 40, 30))
         .color(seed_colors::Base::White)
         .radius(px(4))
@@ -271,45 +239,41 @@ fn hover_counter() -> Node<Msg> {
         .py(px(12))
         .m(px(6));
 
-    let hover_style = S
+    let hover_style = s()
         .hover()
         .bg_color(seed_colors::Green::No4)
         .color(seed_colors::Base::Black);
-    let active_style = S.active().bg_color(seed_colors::Green::No6);
+    let active_style = s().active().bg_color(seed_colors::Green::No6);
 
     div![
-        S.p(px(3)).m(px(3)),
+        s().p(px(3)).m(px(3)),
         h3!["Hover and other Pseudo-selectors styled buttons"],
         md![
             r#" Unlike direct inline styles, you can correctly use pseudo-selectors
 to style things like `:hover` status.  Simply use the pseudo selector name as a method `.hover()` method on a style.  Please note that this 
 sets all properties defined in that style object to be affected by `:hover`.
 
-Typically you would use two styles, one normal style and one a hover.
+Typically you would use two styles, one normal style and one a hover:
         
-``` 
-S.bg_color(hsl(200,40,30))
+```rust
+s().bg_color(hsl(200,40,30))
     .color("white")
     .outline_none()
     .px(px(16))
     .py(px(12))
     .m(px(6)),
-S.hover().bg_color("green").color("black"),
-S.active().bg_color("darkgreen")
+s().hover().bg_color("green").color("black"),
+s().active().bg_color("darkgreen")
 ```
 "#
-        ],
-        p![
-            S.mt(px(2)).display_inline_block(),
-            "You have clicked ",
-            counter,
-            " times",
         ],
         button![
             button_style,
             hover_style,
             active_style,
-            "Increment Counter",
+            "Clicked (",
+            counter,
+            ") times",
             counter.on_click(|v| *v += 1)
         ]
     ]
@@ -318,7 +282,7 @@ S.active().bg_color("darkgreen")
 fn media_query_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let button_style = S
+    let button_style = s()
         .bg_color(seed_colors::Red::No4)
         .color(seed_colors::Base::Black)
         .px(px(16))
@@ -326,35 +290,31 @@ fn media_query_counter() -> Node<Msg> {
         .radius(px(6))
         .m(px(12));
 
-    let media_query = S
+    let media_query = s()
         .media("@media only screen and (max-width: 700px)")
         .bg_color(seed_colors::Green::No4);
 
     div![
-        S.p(px(2)).m(px(2)),
-        h3!["Media Query Styled Counter - shrink width to less than 700px"],
+        s().p(px(2)).m(px(2)),
+        h3!["Media Query Styled Button - shrink width to less than 700px"],
         md![r#"
 Media queries can be used in a number of ways.  The most basic way is by using the `media()` method on a style. This will 
 result in that style being nested within a media query block.
 
 For instance :
-```
-S.media("@media only screen and (max-width: 700px)").bg_color("green")
+```rust
+s().media("@media only screen and (max-width: 700px)").bg_color("green")
 ``` 
 will ensure that the background colour will be green if the screen is 700px or less wide.
 
 There are a number of other (and better) ways to define media queries that involve themes and breakpoints. This will be discussed later.
         "#],
-        p![
-            S.m(px(2)).display_inline_block(),
-            "You have clicked ",
-            counter,
-            " times (Shrink this page width!)",
-        ],
         button![
             button_style,
             media_query,
-            "Increment Counter",
+            "Clicked (",
+            counter,
+            ") times",
             counter.on_click(|v| *v += 1)
         ]
     ]
@@ -363,7 +323,7 @@ There are a number of other (and better) ways to define media queries that invol
 fn variant_counter() -> Node<Msg> {
     let danger = use_state(|| false);
     let counter = use_state(|| 0);
-    let base_button_style = S
+    let base_button_style = s()
         .bg_color(seed_colors::Gray::No6)
         .color(seed_colors::Base::White)
         .px(px(16))
@@ -371,18 +331,42 @@ fn variant_counter() -> Node<Msg> {
         .radius(px(6))
         .m(px(12));
 
-    let danger_style = base_button_style.bg_color(seed_colors::Red::No7);
-    let ok_style = base_button_style.bg_color(seed_colors::Green::No5);
+    let danger_style = base_button_style.clone().bg_color(seed_colors::Red::No7);
+    let ok_style = base_button_style.clone().bg_color(seed_colors::Green::No5);
 
     div![
-        S.p(px(2)).m(px(2)),
-        h3!["Variants of Styles"],
-        p![
-            S.mt(px(4)).display_inline_block(),
-            "You have clicked ",
-            counter,
-            " times",
-        ],
+        s().p(px(2)).m(px(2)),
+        h3!["Style Variants"],
+        md![r#"
+Due to the flexibilty of writing rust in view code variants of styles can be trivially implemented.
+
+For instance we can have a base button style:
+
+```rust
+let base_button_style = s()
+    .bg_color(seed_colors::Gray::No6)
+    .color(seed_colors::Base::White)
+    .px(px(16))
+    .py(px(12))
+    .radius(px(6))
+    .m(px(12));
+``` 
+
+as well as `danger` and `ok` variants: 
+
+```rust
+    let danger_style = base_button_style.clone().bg_color(seed_colors::Red::No7);
+    let ok_style = base_button_style.clone().bg_color(seed_colors::Green::No5);
+```
+
+We can then conditionally use this style direcrtly inside the button macro:
+```rust
+button![
+    if CONDITION { danger_style } else { ok_style },
+    ...
+]
+```
+        "#],
         button![
             base_button_style, // group styles that need the same class
             "Click to swap variants of the other button",
@@ -390,60 +374,18 @@ fn variant_counter() -> Node<Msg> {
         ],
         button![
             if danger.get() { danger_style } else { ok_style }, // group styles that need the same class
-            "Increment Counter",
+            "Clicked (",
+            counter,
+            ") times",
             counter.on_click(|v| *v += 1)
         ]
     ]
 }
 
-#[derive(Hash, PartialEq, Eq, Clone)]
-enum Color {
-    Primary,
-    Secondary,
-    Accent,
-    Muted,
-}
-
-impl ColorTheme for Color {}
-
-fn pink_theme() -> Theme {
-    Theme::default()
-        .set_color(Color::Primary, hsl(200, 70, 50))
-        .set_color(Color::Secondary, hsl(180, 60, 50))
-}
-
-fn themed_counter() -> Node<Msg> {
-    let counter = use_state(|| 0);
-
-    div![use_themes(
-        || vec![pink_theme()],
-        || div![
-            S.p(px(2)).m(px(2)),
-            h3!["With Theme"],
-            p![
-                S.mt(px(2)).display_inline_block(),
-                "You have clicked ",
-                counter,
-                " times",
-            ],
-            button![
-                S.color((Color::Secondary, rgba(0.0, 0.0, 0.0, 0.0))) // Padding will take the 3rd space theme value, or 10px if not present
-                    .m("8px") // Margin will take the 2nd space theme value, or 8px if not present
-                    .bg_color((Color::Primary, rgba(0.0, 0.0, 0.0, 0.0))) // The primary color value, or "red" if not present
-                    .color("white")
-                    .radius(px(2))
-                    .display_inline_block(),
-                "Increment Counter",
-                counter.on_click(|v| *v += 1)
-            ]
-        ]
-    ),]
-}
-
 fn styles_on_args_counter(user_style: seed_style::Style) -> Node<Msg> {
     let counter = use_state(|| 0);
 
-    let button_style = S
+    let button_style = s()
         .bg_color(seed_colors::Red::No6)
         .color(seed_colors::Base::White)
         .px(px(10))
@@ -451,17 +393,43 @@ fn styles_on_args_counter(user_style: seed_style::Style) -> Node<Msg> {
         .m(px(4));
 
     div![
-        S.p(px(2)).m(px(2)),
-        h3!["Style From Arguments"],
-        p![
-            S.mt(px(2)).display_inline_block(),
-            "You have clicked ",
-            counter,
-            " times",
-        ],
+        s().p(px(2)).m(px(2)),
+        h3!["Introduction"],
+        md![r#"
+Because a style is just an object it can be passed in as the argument to a view function. e.g:
+
+```
+user_styled_btn(s().bg_color(seed_colors::Indigo::No5).font_size(px(24))),
+```
+
+For instance this function defines a button with a user provided style, simply place the user defined style
+after the default style:
+
+```rust
+fn user_styled_btn(user_style: seed_style::Style) -> Node<Msg> {
+    ...
+    ...
+    let button_style = s()
+        .bg_color(seed_colors::Red::No6)
+        .color(seed_colors::Base::White)
+        .px(px(10))
+        .py(px(8))
+        .m(px(4));
+    ...
+    ...
+    button![
+        button_style, user_style,
+        ...
+    ]
+}        
+``` 
+        "#],
         button![
-            [button_style, user_style], // group styles that need the same class
-            "Increment Counter",
+            button_style,
+            user_style,
+            "Clicked (",
+            counter,
+            ") times",
             counter.on_click(|v| *v += 1)
         ]
     ]

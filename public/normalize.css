@@ -5,7 +5,7 @@
 
 /**
  * 1. Correct the line height in all browsers.
- * 2. Prevent adjustments of font size after orientation changes in iOS.
+ * 2. Prevent adjustments of font size after orientation changes in iOs().
  */
 
  html {
@@ -293,7 +293,7 @@
   }
   
   /**
-   * Remove the inner padding in Chrome and Safari on macOS.
+   * Remove the inner padding in Chrome and Safari on macOs().
    */
   
   [type="search"]::-webkit-search-decoration {
