@@ -17,7 +17,7 @@ fn load_test(_model: &Model) -> Node<Msg> {
         s().padding_x(3)
             .padding_y(2)
             .display_flex().flex_direction_column(),
-        h3![s().font_size(px(18)).pb(px(5)), "Load Test"],
+        h1![s().font_size(px(18)).pb(px(5)), "Load Test"],
         p![
             s().px(px(4)),
             r#"Each time you hit Redraw this will create 1000

@@ -12,13 +12,13 @@ pub fn view(_model: &Model) -> Node<Msg> {
 # Getting Started
 
 Seed Style is a compehensive styling, layout and theming solution for Seed apps.  Seed is a frontend framework
-written in rust to enable cration of fast and realiable web apps.
+written in rust to enable creation of fast and reliable web apps.
 
 It is inlfuenced by and has almost all of the features of popular libraries such as Styled Components, Styled-System, 
 XStyled, Theme-UI and atomic-layout. Phew! Thats a lot!  The idea is that as a devloper you can decide how you
 want to work and use as much or as little of the power available to you as you want.
 
-Want to create web apps with responsive, themeable styling, let's dive right in!
+Want to create web apps with responsive, themeable styling? let's dive right in!
 
 ## Setting up the app environment.
 
@@ -40,7 +40,10 @@ Clear out the contents of the `themed_view()` function and replace as below:
 
 ```rust
 pub fn themed_view(_model: &Model) -> Node<Msg> {
-    p![s().font_size(px(24)), "Hello World from Seed!"]
+    p![
+        s().font_size(px(24)), 
+        "Hello World from Seed!"
+    ]
 }
 ```
 
@@ -76,9 +79,9 @@ h) A plain `'static &str`.
             div![s().width(px(30)).flex_none().bg_color(Color::MutedPrimary)],
             div![
                 s().p(px(12)),
-                r#"
+                md![r#"
 Infact you can use any argument that implements the `UpdateStyle` trait, which all the above do. Therefore advanced 
-user you can extend Seed Style by implementing `UpdateStyle` to process arbitrary input."#
+user you can extend Seed Style by implementing `UpdateStyle` to process arbitrary input."#]
             ]
         ],
         md![r#"
@@ -96,8 +99,8 @@ pub fn themed_view(_model: &Model) -> Node<Msg> {
             .color(Color::Primary)
             .border_bottom_width(px(3))
             .border_style_solid()
-            .border_color(seed_colors::Red::No4)
-            , "Hello World from Seed!"
+            .border_color(seed_colors::Red::No4),
+        "Hello World from Seed!"
     ]
 }
 ```
@@ -105,8 +108,9 @@ pub fn themed_view(_model: &Model) -> Node<Msg> {
 This will set the text color to the primary color set in `themes.rs`. It will also set the border color to the color described by `seed_colors::Red::No4` 
 this color is a preset color that can be made available if the `style_presets()` theme is used.
 
-## Global Styles        
-If you inspect the text it will also have a font 'Lato' already applied. What is going on here? We certainly did not
+## Global Styles       
+
+If you inspect the text it will also have a font `Lato` already applied. What is going on here? We certainly did not
 specify it in the `Style` object.
 
 Seed Style includes a very useful feature, global styles, which enable styles to be set globally for all elements of a specific type.  

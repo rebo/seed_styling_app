@@ -8,10 +8,10 @@ use seed_style::*;
 pub fn view(model: &Model) -> Node<Msg> {
     render_centred_article(model, |_| {
         div![
-            h2!["Introduction"],
+            h1!["Button Styling"],
             p![
-                r#"Using Seed Style we can style in many different ways, here he see how we can apply concepts such 
-as pseudo classes, media queries, and variants to the styling of a number of buttons."#
+                r#"Using Seed Style we can apply styles in many different ways. This page demonstrates some applicaitons that include 
+the use of pseudo classes, media queries, and variant styling."#
             ],
             unstyled_counter(),
             basic_styled_counter(),

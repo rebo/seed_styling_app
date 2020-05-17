@@ -46,7 +46,7 @@ pub fn themed_global_styles() {
             s().font_weight_v900()
                 .display_block()
                 .py(3)
-                .mt(6)
+                .mt(px(64 + 8))
                 .mb(5)
                 .font_size(px(36)),
         )
