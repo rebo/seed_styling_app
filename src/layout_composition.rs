@@ -1,8 +1,8 @@
-use crate::theme::Breakpoint;
+use crate::app_styling::theme::Breakpoint;
 use crate::{Model, Msg};
 use seed::prelude::*;
-use seed_style::measures::{pc, px};
 use seed_style::*;
+use seed_style::{pc, px};
 ////////////////////////////////////////////////////
 //
 //  Layout Composition Example
@@ -119,7 +119,7 @@ fn header_layout_small() -> Layout<HeaderArea> {
 // The Main Content Layout  notice this has no named areas
 // Just a repeating grid, therefore we use the 'NoArea' Area type.
 fn main_content_layout() -> Layout<NoArea> {
-    Layout::<NoArea>::grid().style(
+    Layout::grid(
         s().grid_template_columns("repeat(auto-fit, minmax(250px, 1fr))")
             .grid_auto_flow_row()
             .justify_items_center()
@@ -169,7 +169,7 @@ pub fn view(model: &Model) -> Node<Msg> {
         .render(model)
     })
     .set_content(MainContent, |model| {
-        Composition::with_layout(ExtraSmall, main_content_layout())
+        Composition::with_layout(main_content_layout())
             .mock_children("Photo", 7, px(250), px(250))
             .render(model)
     })
