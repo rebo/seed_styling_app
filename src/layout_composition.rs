@@ -19,10 +19,10 @@ use seed_style::{pc, px};
 // This example will be laid out as follows.
 //
 // The main page will be a traditional header sidebar content & footer at larger screens.
-// And a linear Header, collapsable nav, content and footer at smaller screens.
+// And a linear Header, collapsible nav, content and footer at smaller screens.
 //
 // The header is split into logo, title and actions at larger screens
-// And title and hambuger button at smaller screens
+// And title and hamburger button at smaller screens
 //
 // The Sidebar has a title plus repeatable elements
 //
@@ -65,7 +65,7 @@ fn app_layout_large() -> Layout<AppArea> {
             .grid_gap(px(8)),
     )
     // This layout definition is completely content agnostic.
-    // Infact it can be used in any seed app that needs a similar arrangement of areas.
+    // In fact it can be used in any seed app that needs a similar arrangement of areas.
 }
 
 // Small layout for devices such as phones, column layout.
@@ -135,7 +135,7 @@ fn main_content_layout() -> Layout<NoArea> {
 //
 // In theory the above layouts in any app with similar layouts / Themes.
 // These could be cut & pasted out freely, or stored in their own crate.
-// Typically the above would be in a separate layout file that defines layout primatives
+// Typically the above would be in a separate layout file that defines layout primitives
 
 //// ------------------ End of Layout Definition ---------------------
 
@@ -152,7 +152,7 @@ pub fn view(model: &Model) -> Node<Msg> {
     use AppArea::*;
     use Breakpoint::*;
 
-    //  To enable differerent layouts on different breakpoints we add layouts to a composition and render
+    //  To enable different layouts on different breakpoints we add layouts to a composition and render
     //
     //  If no breakpoints match, the composition will choose the smallest one.
     Composition::with_layouts(&[

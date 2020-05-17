@@ -10,6 +10,8 @@ mod header;
 mod home;
 mod layout_composition;
 mod nav;
+mod responsive_styling;
+mod theming;
 mod thousandtest;
 
 mod app_styling;
@@ -33,6 +35,8 @@ use app_styling::theme::*;
 enum Page {
     Home,
     LayoutComposition,
+    Theming,
+    ResponsiveStyling,
     ButtonStyling,
     LoadTest,
     GettingStarted,
@@ -53,7 +57,7 @@ pub enum Msg {
     NoOp,
 }
 
-// Update optionally hamdles WindowResized. For performance reasons we dont want to
+// Update optionally handles WindowResized. For performance reasons we don't want to
 // re-render the app on every window resize, only if the resize takes the window into new breakpoint
 // this step could be completely left off and just added in at the end of a design once all breakpoints have been
 // firmly decided.
@@ -79,6 +83,8 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
             match url.remaining_path_parts().as_slice() {
                 ["home"] => page.set(Page::Home),
                 ["buttons"] => page.set(Page::ButtonStyling),
+                ["theming"] => page.set(Page::Theming),
+                ["responsive_styling"] => page.set(Page::ResponsiveStyling),
                 ["load_test"] => page.set(Page::LoadTest),
                 ["layout"] => page.set(Page::LayoutComposition),
                 ["getting_started"] => page.set(Page::GettingStarted),
@@ -174,6 +180,8 @@ fn main_view(model: &Model) -> Node<Msg> {
         Page::Home => home::view(model),
         Page::ButtonStyling => button_styling::view(model),
         Page::LayoutComposition => layout_composition::view(model),
+        Page::Theming => theming::view(model),
+        Page::ResponsiveStyling => responsive_styling::view(model),
         Page::LoadTest => thousandtest::view(model),
         Page::GettingStarted => getting_started::view(model),
     }

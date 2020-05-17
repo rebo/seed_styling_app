@@ -7,7 +7,7 @@ use seed_style::*;
 // and then accessed at any point in the view.
 //
 // The Theme Object is broadly consistent with the Theme specification that is used in
-// several css librarys: https://theme-ui.com/theme-spec/
+// several css libraries: https://theme-ui.com/theme-spec/
 //
 // A Theme object is made up of named css values called aliases
 // as well as scales for css values/
@@ -19,7 +19,7 @@ use seed_style::*;
 // Having named aliases for things like colors is useful because it means
 // swapping out colors, or having a dark/light theme can be defined in a central location.
 //
-// In order to use cssvalue aliases we use an enum.
+// In order to use css value aliases we use an enum.
 //
 // // Main Color Theme Keys
 #[derive(Hash, PartialEq, Eq, Clone)]
@@ -52,7 +52,7 @@ pub enum Shadow {
     RightEdge,
 }
 impl ShadowTheme for Shadow {} // Enable `Breakpoint` as a Breakpoint alias.
-                               // The good thing about declaring the keys ahread of time is that it is easy for
+                               // The good thing about declaring the keys ahead of time is that it is easy for
                                // A user of the app / component to know what can be set to configure the style of the app
 
 // WIth the keys declared, we can now actually define a theme that we want to use:
@@ -85,7 +85,7 @@ impl ShadowTheme for Shadow {} // Enable `Breakpoint` as a Breakpoint alias.
 pub fn dark_theme() -> Theme {
     use Breakpoint::*;
 
-    // I generally set the named aliases seperately from the theme scales:
+    // I generally set the named aliases separately from the theme scales:
     let theme = Theme::new("dark_theme")
         .set_color(Color::Background, CssColor::Hex(0x333333))
         .set_color(Color::MainText, CssColor::Hex(0xDDDDDD))
@@ -121,7 +121,7 @@ pub fn dark_theme() -> Theme {
 pub fn my_theme() -> Theme {
     use Breakpoint::*;
 
-    // I generally set the named aliases seperately from the theme scales:
+    // I generally set the named aliases separately from the theme scales:
     let theme = Theme::new("light_theme")
         .set_color(Color::Background, CssColor::Hex(0xFFFFFF))
         .set_color(Color::MainText, CssColor::Hex(0x000000))

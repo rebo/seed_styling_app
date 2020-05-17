@@ -28,7 +28,7 @@ fn load_test(_model: &Model) -> Node<Msg> {
             usually the case, this renders in 16ms. "#
         ],
         p!["Note #1: Not much work has yet gone into improving styling performance yet."],
-        p!["Note #2: Everytime you hit redraw it adds 1000 styles to the app's stylesheet so you probably want to refresh after testing this!"],
+        p!["Note #2: Every time you hit redraw it adds 1000 styles to the app's stylesheet so you probably want to refresh after testing this!"],
         p!["Note #3: If this appears a little laggy you probably have built in debug mode the timing here is approx 450ms!."],
         button![
             s().radius(px(4))

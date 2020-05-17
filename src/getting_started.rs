@@ -11,12 +11,12 @@ pub fn view(_model: &Model) -> Node<Msg> {
         md![r#"
 # Getting Started
 
-Seed Style is a compehensive styling, layout and theming solution for Seed apps.  Seed is a frontend framework
-written in rust to enable creation of fast and reliable web apps.
+Seed Style is a comprehensive styling, layout and theming solution for Seed apps.  
 
-It is inlfuenced by and has almost all of the features of popular libraries such as Styled Components, Styled-System, 
-XStyled, Theme-UI and atomic-layout. Phew! Thats a lot!  The idea is that as a devloper you can decide how you
-want to work and use as much or as little of the power available to you as you want.
+It is influenced by and has almost all of the features of popular libraries such as Styled Components, Styled-System, 
+XStyled, Theme-UI and atomic-layout. Phew! Thats a lot!  
+
+The idea is that as a developer you can decide how you want to work and use as much or as little of the power available to you as you need.
 
 Want to create web apps with responsive, themeable styling? let's dive right in!
 
@@ -52,7 +52,7 @@ Restarting the app with `cargo make start` and refreshing the page will show the
 ## How it works
 
 The `s()` function creates a `Style` object which is then modified by adding rules using methods such as `font_size`.
-This `Style` object is responible for updating the dom and ensuring all styles are available to specific elements.
+This `Style` object is responsible for updating the dom and ensuring all styles are available to specific elements.
 
 The argument to `font_size()` is `px(24)` which is a helper method that creates an `ExactLength` which the `font_size()` method accepts.
 However we can use many different arguments to our property methods, including:
@@ -80,7 +80,7 @@ h) A plain `'static &str`.
             div![
                 s().p(px(12)),
                 md![r#"
-Infact you can use any argument that implements the `UpdateStyle` trait, which all the above do. Therefore advanced 
+In fact you can use any argument that implements the `UpdateStyle` trait, which all the above do. Therefore advanced 
 user you can extend Seed Style by implementing `UpdateStyle` to process arbitrary input."#]
             ]
         ],
@@ -124,7 +124,7 @@ app font is now Arial.
 ## Summary
 
 In this short getting started tutorial we have seen how to download and run a Seed quickstart, implement basic styles on a paragraph,
-use themes to set specfic re-used values and seen how to use global styles to apply make site wide changes.
+use themes to set specific re-used values and seen how to use global styles to apply make site wide changes.
 
 "#],
     ]

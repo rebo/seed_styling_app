@@ -10,13 +10,13 @@ pub fn view(model: &Model) -> Node<Msg> {
         div![
             h1!["Button Styling"],
             p![
-                r#"Using Seed Style we can apply styles in many different ways. This page demonstrates some applicaitons that include 
+                r#"Using Seed Style we can apply styles in many different ways. This page demonstrates some applications that include 
 the use of pseudo classes, media queries, and variant styling."#
             ],
             unstyled_counter(),
             basic_styled_counter(),
             css_styled_counter(),
-            conveinience_styled_counter(),
+            convenience_styled_counter(),
             hover_counter(),
             media_query_counter(),
             variant_counter(),
@@ -94,9 +94,9 @@ Strings can be used for properties (e.g. `.padding_bottom("8px")`).  You can als
 These types are enums, for instance demonstrated here with a `CssDisplay::InlineBlock` passed to the `.display()` method 
 or the `CssOutlineStyle::None` passed to the `outline_style()` method.
 
-The reason for prefering typed arguments is that typos are detected at compile time. For instance writing
-this page I accidently typed `Outine` instead of `Outline`. If this was pure css the error would only be 
-spotted if I had thorouly checked the resultant page and css for a property that is often easy to miss.
+The reason for preferring typed arguments is that typos are detected at compile time. For instance writing
+this page I accidentally typed `Outine` instead of `Outline`. If this was pure css the error would only be 
+spotted if I had thoroughly checked the resultant page and css for a property that is often easy to miss.
 
 See `css_values.rs` for a complete list of properties and values available.
        "#
@@ -109,7 +109,7 @@ fn css_styled_counter() -> Node<Msg> {
 
     let button_style = s().raw(
         r#"
-        font-family: verdana;
+        font-family: Verdana;
         font-size: 20px;
         display: inline-block;
         text-align: center;
@@ -131,7 +131,7 @@ fn css_styled_counter() -> Node<Msg> {
             counter.on_click(|v| *v += 1)
         ],
         md![
-            r##"This is a button styled with css direcrly using the `.raw()` method.  We can include any css that can be used inside a style block. In this case we have used:
+            r##"This is a button styled with css directly using the `.raw()` method.  We can include any css that can be used inside a style block. In this case we have used:
 
 ```rust
 s().raw(
@@ -148,7 +148,7 @@ s().raw(
     "#
 )   
 ```
-Whilst this is conveinient please note that this css is not type checked in anyway, it is usually better to use type checked css 
+Whilst this is convenient please note that this css is not type checked in anyway, it is usually better to use type checked css 
 so that any issues can be prevented at compile time.
 
        "##
@@ -156,7 +156,7 @@ so that any issues can be prevented at compile time.
     ]
 }
 
-fn conveinience_styled_counter() -> Node<Msg> {
+fn convenience_styled_counter() -> Node<Msg> {
     let counter = use_state(|| 0);
 
     let button_style = s()
@@ -170,9 +170,9 @@ fn conveinience_styled_counter() -> Node<Msg> {
 
     div![
         s().display_flex().flex_direction_column(),
-        h2!["Styled with shorter conveinience methods"],
+        h2!["Styled with shorter convenience methods"],
         md![
-            r#"There are conviencience methods available  in order to make defining styles more efficient.
+            r#"There are convenience methods available  in order to make defining styles more efficient.
 For instance `pl()` for `padding-left()`. Horizontal/ vertical padding and margins can be set with `.mx()`, `py()` etc.
 
 Furthermore all properties with single variant values can be set by appending the value name to the property method.
@@ -329,7 +329,7 @@ fn variant_counter() -> Node<Msg> {
             counter.on_click(|v| *v += 1)
         ],
         md![r#"
-Due to the flexibilty of writing rust in view code variants of styles can be trivially implemented.
+Due to the flexibility of writing rust in view code variants of styles can be trivially implemented.
 
 For instance we can have a base button style:
 
@@ -350,7 +350,7 @@ as well as `danger` and `ok` variants:
     let ok_style = base_button_style.clone().bg_color(seed_colors::Green::No5);
 ```
 
-We can then conditionally use this style direcrtly inside the button macro:
+We can then conditionally use this style directly inside the button macro:
 ```rust
 button![
     if CONDITION { danger_style } else { ok_style },

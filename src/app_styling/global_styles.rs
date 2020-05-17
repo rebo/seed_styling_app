@@ -12,7 +12,7 @@ pub fn init_styles() {
         .style("html", s().box_sizing_border_box())
         .style("img", s().box_sizing_content_box())
         .style("*, *:before, *:after", s().box_sizing("inherit"))
-        // make sure we never ever get horizontal scrollbars
+        // make sure we never ever get horizontal scroll bars
         .style("body", s().max_width(vw(100)))
         .activate_init_styles()
 }

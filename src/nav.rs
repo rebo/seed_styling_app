@@ -64,6 +64,16 @@ pub fn view(model: &Model) -> Node<Msg> {
                 model.show_drawer.on_click(|v| *v = false)
             ]],
             li![a![
+                attrs! {At::Href => "/theming"},
+                "Theming Support",
+                model.show_drawer.on_click(|v| *v = false)
+            ]],
+            li![a![
+                attrs! {At::Href => "/responsive_styling"},
+                "Responsive Styling",
+                model.show_drawer.on_click(|v| *v = false)
+            ]],
+            li![a![
                 attrs! {At::Href => "/layout"},
                 "Layout Example",
                 model.show_drawer.on_click(|v| *v = false)
