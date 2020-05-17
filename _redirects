@@ -1,2 +1,3 @@
 /pkg/*  /pkg/:splat
+/public/* /public/:splat
 /*    /index.html   200
