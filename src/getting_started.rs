@@ -13,10 +13,11 @@ pub fn view(_model: &Model) -> Node<Msg> {
 
 Seed Style is a comprehensive styling, layout and theming solution for Seed apps.  
 
-It is influenced by and has almost all of the features of popular libraries such as Styled Components, Styled-System, 
+It is influenced by, and has almost all of the features of, popular libraries such as Styled Components, Styled-System, 
 XStyled, Theme-UI and atomic-layout. Phew! Thats a lot!  
 
-The idea is that as a developer you can decide how you want to work and use as much or as little of the power available to you as you need.
+The idea is that as a developer you can use the library in a way that suits your workflow and use as much or as little 
+of the features as you need.
 
 Want to create web apps with responsive, themeable styling? let's dive right in!
 
@@ -52,7 +53,7 @@ Restarting the app with `cargo make start` and refreshing the page will show the
 ## How it works
 
 The `s()` function creates a `Style` object which is then modified by adding rules using methods such as `font_size`.
-This `Style` object is responsible for updating the dom and ensuring all styles are available to specific elements.
+This `Style` object is responsible for updating the DOM and ensuring all styles are available to specific elements.
 
 The argument to `font_size()` is `px(24)` which is a helper method that creates an `ExactLength` which the `font_size()` method accepts.
 However we can use many different arguments to our property methods, including:
@@ -80,15 +81,15 @@ h) A plain `'static &str`.
             div![
                 s().p(px(12)),
                 md![r#"
-In fact you can use any argument that implements the `UpdateStyle` trait, which all the above do. Therefore advanced 
-user you can extend Seed Style by implementing `UpdateStyle` to process arbitrary input."#]
+In fact you can use any argument that implements the `UpdateStyle` trait, which all the above do. Advanced 
+users can therefore extend Seed Style by implementing `UpdateStyle` to process arbitrary input."#]
             ]
         ],
         md![r#"
 
 ## Basic Themes
 
-Seed Style includes advanced theming capabilities, which enables common values to be set and re-used throughout your application. Our themes
+Seed Style includes comprehensive theming capabilities, which enables common values to be set and re-used throughout your application. Our themes
 conform to the "Theme Specification" which is means we use a `Theme` object to store styles and values. Add the following style to the above
 code:
 
@@ -113,7 +114,7 @@ this color is a preset color that can be made available if the `style_presets()`
 If you inspect the text it will also have a font `Lato` already applied. What is going on here? We certainly did not
 specify it in the `Style` object.
 
-Seed Style includes a very useful feature, global styles, which enable styles to be set globally for all elements of a specific type.  
+Seed Style includes a very useful feature, global styles, which enable styles to be set globally for all elements of a specific type.
 Think of this as a replacement for a global `.css` file. The advantage of doing this within Seed is that global styles can make use
 of theme specific values.
 

@@ -10,13 +10,13 @@ pub fn view(_model: &Model) -> Node<Msg> {
     div![md![r#"
 # Theming Support
 
-Seed Style supports the [Theme Specification](https://theme-ui.com/theme-spec/) which essentially a common layout for a Theme Object which
+Seed Style supports the [Theme Specification](https://theme-ui.com/theme-spec/) which essentially a common format for a Theme Object which
 is responsible for maintaining both a list of value aliases, as well as a set of value scales which can be used within an application.
 
 Typically you would use a theme to control access to common values that might be applied to a variety of properties. For instance a 
-`CssColor can be applied to a `CssBackgroundColor` and a `CssBorderColor` amongst other values.
+`CssColor` can be applied to a `CssBackgroundColor` and a `CssBorderColor` amongst other values.
 
-Themed values in Seed Style are fully scoped and therefore can be nested inside other components that use other themes.
+Themed values in Seed Style are fully scoped and can therefore be nested inside other components that use other themes.
 
 Themes are an important tool in maintaining design consistency and a logical design system that means adjusting your application' style
  in a consistent manner is as painless as possible.
@@ -77,7 +77,7 @@ div![
 
 ## Theme scales
 
-Along with theme aliases theme scales are another important aspect to a theme. They allow css values to be set as a scale, or array of values.
+Along with theme aliases theme scales are another important aspect to a theme. They allow css values to be set as an array of values.
 This is handy if you do not want to explicitly name theme values, and also to create a consistent scale of values.
 
 For instance,
@@ -100,7 +100,7 @@ div![
 ]
 ```
 
-Refers to `8px` in the above scale.  Note scales are currently 0-based indexed, this may change in response to feedback.
+Refers to `8px` in the above scale.  ( Note scales are currently 0-based indexed, this may change in response to feedback. )
 
 ## Default values
 
@@ -109,11 +109,11 @@ a style property. For instance:
 
 ```
 div![
-    s().bg_color( (Color::Primary, rgb(255,0,0) )),
+    s().bg_color( (Color::Primary, rgb(255,0,0)) ),
     "Hello"
 ]
 ```
-Uses the `Primary` color theme, but if its not been set then it will default to red.
+Uses the `Primary` color theme for the background colour, but if its not been set then it will default to red.
 
 ## Accessing and scoping themes
 
@@ -132,7 +132,7 @@ use_themes(
 )
 ```
 
-You pass it an array of themes to apply as the first argument, and the content to render as the second argument. Please note that these are 
+You need to pass it a vec of themes to apply as the first argument, and the content to render as the second argument. Please note that these are 
 passed as closures so that themes do not need to be instantiated on every render.
 
 Anything in the second argument closure will have access to the provided theme.
