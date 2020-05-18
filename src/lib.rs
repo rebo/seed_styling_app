@@ -1,5 +1,5 @@
 #![feature(track_caller)]
-use seed::prelude::*;
+use seed::{prelude::*, *};
 use seed_hooks::*;
 use seed_style::*;
 
@@ -90,6 +90,7 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
                 ["getting_started"] => page.set(Page::GettingStarted),
                 _ => {}
             }
+            window().scroll_to_with_x_and_y(0., 0.);
             Msg::NoOp
         })
         .notify(subs::UrlChanged(url));
