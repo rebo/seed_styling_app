@@ -67,6 +67,7 @@ fn main_content(model: &Model) -> Node<Msg> {
     )
     .add_child(|model: &Model| {
         div![
+            s().style_child("pre").justify_content_center(),
             s().grid_column_start("2")
                 .grid_column_end("3")
                 .padding_x(3)

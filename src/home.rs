@@ -37,6 +37,7 @@ fn main_content(model: &Model) -> Node<Msg> {
                 .grid_column_end("3")
                 .padding_x(3)
                 .padding_y(2),
+            s().style_child("pre").justify_content_center(),
             p![
                 "Use the full power of typed CSS directly within any Seed component. 
             Theme, context and media query aware mean your styles are effortlessly 
