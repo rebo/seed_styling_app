@@ -395,8 +395,6 @@ We will be making use of Seed Style features to assign with the styling and layo
 ,md![r#"
 ```
 // In in lib.rs...
-
-// In in lib.rs...
 #[topo::nested]
 fn markdown_editor() -> Node<Msg> {
     Column![
@@ -427,7 +425,7 @@ The reason we annotate with `#[topo::nested]` is so that `markdown_editor` can o
 
 Style wise, it lays out a column of two rows, the first row contains two columns for the markdown input and the preview pane.  The second row aligns a submit button to the right.
 Note that `Row!` and `Column!` are both flex grow with zero basis. Which means they fill their container as much as possible.
-This is why we set Flex::None on the title and button rows because we don't want them to grow.
+This is why we set `Flex::None` on the title and button rows because we don't want them to grow.
 
 This component can be rendered by calling it in the root view:
 
@@ -503,6 +501,7 @@ fn markdown_editor() -> Node<Msg> {
         Item![flex = Flex::None, align = ColumnAlign::Top, "Preview:"],
         div![ 
             class!["markdown-body"],  
+            source.get(),
             ...
         ]
     ..

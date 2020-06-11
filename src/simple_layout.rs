@@ -20,10 +20,23 @@ Seed Style provides both simple layout primitives as well as a fully comprehensi
 ## Row Layout
 
 You can layout elements within a Row by using the `Row![]` macro. Each Item is then aligned left,center, or right by setting
-the `align` argument to `ItemAlign::Left`, `ItemAlign::Right`, or `ItemAlign::Center`.  Any children nodes not in an Item![] 
-are automatically wrapped in `Item![.., ItemAlign::left]`. 
+the `align` argument to `RowAlign::Left`, `RowAlign::Right`, or `RowAlign::Center`.  Any children nodes not in an `Item![]`
+are automatically assigned `RowAlign::left`. 
 
-Options are `gap` which expects an ExactLength to set the gap between Items in the Row.
+Options on `Row` are :
+
+1. `gap`  - expects an ExactLength to set the gap between Items in the Row an
+1. `flex` - often a `Row!` or `Column!` is a flex item, therefore flex will set this property. Default is `Flex::Full` i.e. `flex: 1 1 0%; min-height: 0px;min-width: 0px;` Which ensures 
+the element grows and shrinks as much as needed. Other choices are `Flex::None` no flex, `Flex::Content` fits the content minimally, and Flex::Custom() for a custom value.
+1. `padding` - the space around each item in the row or column.
+
+Options on `Item` are :
+
+1. `flex` - an Item is always a flex item, therefore flex will set this property. Default is `Flex::Content` which fits the content minimally. Other choices are `Flex::None` no flex,  
+`Flex::Full` i.e. `flex: 1 1 0%; min-height: 0px;min-width: 0px;` Which ensures the element grows and shrinks as much as needed., and Flex::Custom() for a custom value.
+1. RowAlign which aligns the item to Left, Center, Right, LeftTop, CenterTop, RightTop, LeftMiddle, CenterMiddle, RightMiddle, LeftBottom, CenterBottom, RightBottom.
+
+Row `Items` are laid out first, followed up the Row's children in the left position.
 
 The Row is guaranteed to to be laid out as a Row with no wrapping.
 
@@ -31,15 +44,15 @@ The Row is guaranteed to to be laid out as a Row with no wrapping.
 Row![
     gap = px(12),
     padding = px(8),
-    Item![ "hello 1", align = ItemAlign::Left ],
-    Item![ "hello 2", align = ItemAlign::Left ],
-    Item![ "hello 3", align = ItemAlign::Left ],
+    Item![ "hello 1", align = RowAlign::Left ],
+    Item![ "hello 2", align = RowAlign::Left ],
+    Item![ "hello 3", align = RowAlign::Left ],
 
-    Item![ "Center hellow", align = ItemAlign::Center],
+    Item![ "Center hellow", align = RowAlign::Center],
 
-    Item![ "hello 4", align = ItemAlign::Right],
-    Item![ "hello 5", align = ItemAlign::Right],
-    Item![ "hello 6", align = ItemAlign::Right],
+    Item![ "hello 4", align = RowAlign::Right],
+    Item![ "hello 5", align = RowAlign::Right],
+    Item![ "hello 6", align = RowAlign::Right],
 ]
 ```
 
@@ -64,10 +77,24 @@ Example with some colour styling:
 ## Column Layout
 
 You can layout elements within a vertical Column by using the `Column![]` macro. Each Item is then aligned top,center, or bottom by setting
-the `align` argument to `ColumnAlign::Top`, `ColumnAlign::Bottom`, or `ColumnAlign::Middle`.  Any children nodes not in an Item![] 
-are automatically wrapped in `Item![.., ColumnAlign::top]`. 
+the `align` argument to `ColumnAlign::Top`, `ColumnAlign::Bottom`, or `ColumnAlign::Middle`.  Any children nodes not in an `Item![]`
+are automatically assigned`ColumnAlign::Top`. 
 
-Options are `gap` which expects an ExactLength to set the gap between Items in the Column.
+
+Options on `Row` are :
+
+1. `gap`  - expects an ExactLength to set the gap between Items in the Row an
+1. `flex` - often a `Row!` or `Column!` is a flex item, therefore flex will set this property. Default is `Flex::Full` i.e. `flex: 1 1 0%; min-height: 0px;min-width: 0px;` Which ensures 
+the element grows and shrinks as much as needed. Other choices are `Flex::None` no flex, `Flex::Content` fits the content minimally, and Flex::Custom() for a custom value.
+1. `padding` - the space around each item in the row or column.
+
+Options on `Item` are :
+
+1. `flex` - an Item is always a flex item, therefore flex will set this property. Default is `Flex::Content` which fits the content minimally. Other choices are `Flex::None` no flex,  
+`Flex::Full` i.e. `flex: 1 1 0%; min-height: 0px;min-width: 0px;` Which ensures the element grows and shrinks as much as needed., and Flex::Custom() for a custom value.
+1. ColumnAlign which aligns the item to  Top, Middle, Bottom, TopLeft, MiddleLeft, BottomLeft, TopCenter, MiddleCenter, BottomCenter, TopRight, MiddleRight, BottomRight.
+
+Column `Items` are laid out first, followed up the Column's children in the top position.
 
 The Column is guaranteed to to be laid out as a single column with no wrapping.
 

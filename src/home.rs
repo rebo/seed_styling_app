@@ -167,7 +167,7 @@ md![r#"The best way to get started is to download the Seed Style quickstart,
                     model.page.on_click(|p| *p = Page::SimpleLayout )
                 ],
                 div![     
-                    a![attrs!{At::Href => "/simple layout"}, h4!["Simple Layout Primitives"]],
+                    a![attrs!{At::Href => "/simple_layout"}, h4!["Simple Layout Primitives"]],
                     p!["Seed Style includes Row and Column layout primitives to make simple layout a breeze"],
                 ]
             ],
