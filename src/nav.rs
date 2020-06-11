@@ -20,6 +20,7 @@ pub fn view(model: &Model) -> Node<Msg> {
             .background_color(Color::Background)
             .padding_bottom(px(32))
             .padding_right(px(8))
+            .padding_left(px(4))
             .transition("transform 0.2s ease-out 0s"),
         if model.show_drawer.get() {
             s().transform("translateX(0px)")
@@ -27,7 +28,7 @@ pub fn view(model: &Model) -> Node<Msg> {
         } else {
             s().transform("translateX(-100%)").box_shadow("none")
         },
-        if model.page.get() == crate::Page::Home {
+        if model.page.get() == crate::Page::Home  || model.page.get() == crate::Page::HooksHome {
             s().only_and_above(Breakpoint::Small)
                 .transform("translateX(-100%)")
                 .box_shadow("none")
@@ -39,15 +40,18 @@ pub fn view(model: &Model) -> Node<Msg> {
                 .bottom_auto()
                 .transform("none")
         },
+        div![s().pt(px(30)).font_size(px(20)).font_weight_v900(),"Seed Style"]
+        ,
         ul![
-            s().pl(px(12)).pr(px(38)).pt(px(24)),
+            s().pl(px(12)).pr(px(38)).pt(px(12)),
             s().style_descendant("a").text_decoration_none(),
             s().style_child("li")
                 .font_size(px(16))
                 .font_weight_v700()
-                .py(px(4))
-                .my(px(2))
+                .py(px(8))
+                .my(px(4))
                 .text_decoration_none(),
+            s().style_child("li").list_style_type_none(),
             li![a![
                 attrs! {At::Href => "/home"},
                 "Home",
@@ -74,13 +78,57 @@ pub fn view(model: &Model) -> Node<Msg> {
                 model.show_drawer.on_click(|v| *v = false)
             ]],
             li![a![
+                attrs! {At::Href => "/simple_layout"},
+                "Simple Layout Primitives",
+                model.show_drawer.on_click(|v| *v = false)
+            ]],
+            li![a![
                 attrs! {At::Href => "/layout"},
                 "Layout Example",
                 model.show_drawer.on_click(|v| *v = false)
             ]],
             li![a![
+                attrs! {At::Href => "/extending_seed"},
+                "Extending Seed",
+                model.show_drawer.on_click(|v| *v = false)
+            ]],
+            li![a![
                 attrs! {At::Href => "/load_test"},
                 "Load Test",
+                model.show_drawer.on_click(|v| *v = false)
+            ]],
+
+        ],
+        div![s().pt(px(30)).font_size(px(20)).font_weight_v900(),"Seed Hooks"]
+        ,
+        ul![
+            s().pl(px(12)).pr(px(38)).pt(px(12)),
+            s().style_descendant("a").text_decoration_none(),
+            s().style_child("li")
+                .font_size(px(16))
+                .font_weight_v700()
+                .py(px(8))
+                .my(px(4))
+                .text_decoration_none(),
+            s().style_child("li").list_style_type_none(),
+            li![a![
+                attrs! {At::Href => "/hooks_home"},
+                "Hooks Home",
+                model.show_drawer.on_click(|v| *v = false)
+            ]],
+            li![a![
+                attrs! {At::Href => "/hooks_getting_started"},
+                "Hooks Getting Started",
+                model.show_drawer.on_click(|v| *v = false)
+            ]],
+            li![a![
+                attrs! {At::Href => "/hooks_api"},
+                "Hooks Api",
+                model.show_drawer.on_click(|v| *v = false)
+            ]],
+            li![a![
+                attrs! {At::Href => "/hooks_tutorial"},
+                "Hooks Tutorial",
                 model.show_drawer.on_click(|v| *v = false)
             ]],
         ]

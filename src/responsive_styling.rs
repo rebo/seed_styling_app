@@ -13,7 +13,7 @@ pub fn view(_model: &Model) -> Node<Msg> {
 It is trivial to setup responsive styling within Seed Style.  Support is first class and includes everything from media query support, values
 aligned with breakpoint scales, conditional css evaluation and breakpoint-aware conditional rendering. 
 
-As an example of how easy it is to render responsively, the following has a font-size of 12px at the first defined breakpoint and a font size of 24px at the second.
+As an example of how easy it is to render responsively, the following has a font-size of 12px at the first defined breakpoint scale and a font size of 24px at the second.
 
 ```rust
 div![
@@ -72,10 +72,10 @@ Will set the background color to green up to 700px.
 
 Sometimes you want styles to only apply at a specific breakpoint and do not want to write the media query yourself.  You can use the methods
 
-* `only()`
-* `only_and_above()`
-* `only_and_below()`
-* and `except()`
+1. `only()`
+2. `only_and_above()`
+3. `only_and_below()`
+4. and `except()`
 
 to render styles at certain breakpoints accordingly.  For instance:
 
@@ -90,10 +90,10 @@ div![
 
 Sometimes you want to render seed views only at specific breakpoints and do not want to render them at all of not at those breakpoints.  You can use the functions:
 
-* `only()`
-* `only_and_above()`
-* `only_and_below()`
-* `except()`
+1. `only()`
+2. `only_and_above()`
+3. `only_and_below()`
+4. `except()`
 
 to render seed views at certain breakpoints accordingly.  For instance:
 

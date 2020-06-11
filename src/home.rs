@@ -158,7 +158,29 @@ md![r#"The best way to get started is to download the Seed Style quickstart,
                     a![attrs!{At::Href => "/responsive_styling"}, h4!["Responsive Styling"]],
                     p!["Use the power of Seed Style to effortlessly style elements and components that need to be responsive to the device they are rendered on.  Mobile first development is straightforward and comprehensive."]
                 ]
-            ],      
+            ],
+
+            div![s().display_flex(),
+                div![
+                    s().bg_color(Color::Primary).w(px(80)).flex_none().h(px(80)).m(px(12)).mt(px(0)).radius(pc(80)),
+                    model.page.on_click(|p| *p = Page::SimpleLayout )
+                ],
+                div![     
+                    a![attrs!{At::Href => "/simple layout"}, h4!["Simple Layout Primitives"]],
+                    p!["Seed Style includes Row and Column layout primitives to make simple layout a breeze"],
+                ]
+            ],
+
+            div![s().display_flex(),
+            div![
+                s().bg_color(Color::Primary).w(px(80)).flex_none().h(px(80)).m(px(12)).mt(px(0)).radius(pc(80)),
+                model.page.on_click(|p| *p = Page::ExtendingSeed )
+            ],
+            div![     
+                a![attrs!{At::Href => "/extending_seed"}, h4!["Extending Seed"]],
+                p!["Create expressive UI DSLs by extending seed with styles and hooks."],
+            ]
+            ],
             div![s().display_flex(),
                 div![
                     s().bg_color(Color::Primary).w(px(80)).flex_none().h(px(80)).m(px(12)).mt(px(0)).radius(pc(80)),
@@ -169,6 +191,7 @@ md![r#"The best way to get started is to download the Seed Style quickstart,
                     p!["Seed Style includes full layout capabilities, this example demonstrates setting up a typical header-sidebar-content-footer layout. Rendered with inbuilt mock content."],
                 ]
             ],
+   
             div![
                 s().display_flex().flex_direction_row(),
                 div![

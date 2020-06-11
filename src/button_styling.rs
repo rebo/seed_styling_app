@@ -290,7 +290,8 @@ result in that style being nested within a media query block.
 
 For instance :
 ```rust
-s().media("@media only screen and (max-width: 700px)").bg_color("green")
+s().media("@media only screen and (max-width: 700px)")
+    .bg_color("green")
 ``` 
 will ensure that the background colour will be green if the screen is 700px or less wide.
 
@@ -386,11 +387,16 @@ fn styles_on_args_counter(user_style: seed_style::Style) -> Node<Msg> {
 Because a style is just an object it can be passed in as the argument to a view function. e.g:
 
 ```
-user_styled_btn(s().bg_color(seed_colors::Indigo::No5).font_size(px(24))),
+user_styled_btn(
+    s().bg_color(seed_colors::Indigo::No5).font_size(px(24))
+),
 ```
 
-For instance this function defines a button with a user provided style, simply place the user defined style
-after the default style:
+For instance this function defines a button with a user provided style, simply placing the user defined style
+after the default style will ensure that default styles get overwritten by any clashing user style.
+
+This is  in contrast to CSS class selectors which annoyingly have no way to specify CSS precedence other than
+what order the CSS is is defined in the CSS file.
 
 ```rust
 fn user_styled_btn(user_style: seed_style::Style) -> Node<Msg> {

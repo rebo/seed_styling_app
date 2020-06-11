@@ -21,7 +21,7 @@ of the features as you need.
 
 Want to create web apps with responsive, themeable styling? let's dive right in!
 
-## Setting up the app environment.
+## Setting up the app environment
 
 Visit [https://rustup.rs/](https://rustup.rs/) and install rust, ensure you select the `nightly` toolchain.
 
@@ -35,7 +35,7 @@ Then in the terminal type
 
 Visit `http://localhost:8000` and you will see the basic quickstart home page.
 
-## Styling a Html Element
+## Styling a html element
 
 Clear out the contents of the `themed_view()` function and replace as below:
 
@@ -52,7 +52,7 @@ Restarting the app with `cargo make start` and refreshing the page will show the
 
 ## How it works
 
-The `s()` function creates a `Style` object which is then modified by adding rules using methods such as `font_size`.
+The `s()` function creates a `Style` object which is then modified by adding rules using methods such as `font_size()`.
 This `Style` object is responsible for updating the DOM and ensuring all styles are available to specific elements.
 
 The argument to `font_size()` is `px(24)` which is a helper method that creates an `ExactLength` which the `font_size()` method accepts.
@@ -87,7 +87,7 @@ users can therefore extend Seed Style by implementing `UpdateStyle` to process a
         ],
         md![r#"
 
-## Basic Themes
+## Basic themes
 
 Seed Style includes comprehensive theming capabilities, which enables common values to be set and re-used throughout your application. Our themes
 conform to the "Theme Specification" which is means we use a `Theme` object to store styles and values. Add the following style to the above

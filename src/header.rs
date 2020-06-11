@@ -48,13 +48,23 @@ pub fn view(model: &Model) -> Node<Msg> {
         ),
     ])
     .set_content(Home, |_model: &Model| {
-        a![
+        div![
+            a![
             attrs! {At::Href => "/home"},
             div![
                 s().font_weight_v700().letter_spacing(rem(0.02)),
                 s().cursor_pointer().hover(),
                 "Seed Style",
             ]
+        ],
+        a![
+            attrs! {At::Href => "/hooks_home"},
+            div![
+                s().font_weight_v700().letter_spacing(rem(0.02)),
+                s().cursor_pointer().hover(),
+                "Seed Hooks",
+            ]
+        ]
         ]
     })
     .set_content(HeaderOptions, |m: &Model| {

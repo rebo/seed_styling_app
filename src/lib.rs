@@ -5,14 +5,22 @@ use seed_style::*;
 
 mod button_styling;
 mod compositions;
+mod extending_seed;
 mod getting_started;
 mod header;
 mod home;
+mod simple_layout;
 mod layout_composition;
 mod nav;
 mod responsive_styling;
 mod theming;
 mod thousandtest;
+// mod hooks_api_ref;
+mod hooks_home;
+mod hooks_getting_started;
+mod hooks_api;
+mod hooks_tutorial;
+
 
 mod app_styling;
 use app_styling::global_styles::{init_styles, themed_global_styles};
@@ -34,12 +42,18 @@ use app_styling::theme::*;
 #[derive(Clone, PartialEq)]
 enum Page {
     Home,
+    SimpleLayout,
     LayoutComposition,
     Theming,
     ResponsiveStyling,
     ButtonStyling,
     LoadTest,
     GettingStarted,
+    ExtendingSeed,
+    HooksHome,
+    HooksGettingStarted,
+    HooksApi,
+    HooksTutorial,
 }
 
 pub struct Model {
@@ -53,6 +67,7 @@ pub struct Model {
 // Currently need a NoOp for stream/subscribe re-rendering, this is do to be fixed.
 #[derive(Clone)]
 pub enum Msg {
+    SubmitMarkdownHtml(String),
     WindowResized,
     NoOp,
 }
@@ -68,7 +83,8 @@ fn update(msg: Msg, _model: &mut Model, orders: &mut impl Orders<Msg>) {
             // it is passed in a block because we only need it on first assignment.
             conditionally_skip_rendering::<Breakpoint, _, _, _>(|| my_theme(), orders)
         }
-        Msg::NoOp => {}
+        Msg::NoOp => {},
+        Msg::SubmitMarkdownHtml(html) => log!(html),
     }
 }
 
@@ -86,8 +102,14 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
                 ["theming"] => page.set(Page::Theming),
                 ["responsive_styling"] => page.set(Page::ResponsiveStyling),
                 ["load_test"] => page.set(Page::LoadTest),
+                ["simple_layout"] => page.set(Page::SimpleLayout),
                 ["layout"] => page.set(Page::LayoutComposition),
                 ["getting_started"] => page.set(Page::GettingStarted),
+                ["extending_seed"] => page.set(Page::ExtendingSeed),
+                ["hooks_home"] => page.set(Page::HooksHome),
+                ["hooks_api"] => page.set(Page::HooksApi),
+                ["hooks_tutorial"] => page.set(Page::HooksTutorial),
+                ["hooks_getting_started"] => page.set(Page::HooksGettingStarted),
                 _ => {}
             }
             window().scroll_to_with_x_and_y(0., 0.);
@@ -168,10 +190,12 @@ pub fn themed_view(model: &Model) -> Node<Msg> {
 fn main_layout(model: &Model) -> Node<Msg> {
     use compositions::AppArea::*;
 
-    compositions::main_with_sidebar(model.page.get() == Page::Home)
-        .set_content(Main, main_view)
-        .set_content(Nav, nav::view)
-        .render(model)
+    compositions::main_with_sidebar(
+        model.page.get() == Page::Home || model.page.get() == Page::LayoutComposition || model.page.get() == Page::HooksHome,
+    )
+    .set_content(Main, main_view)
+    .set_content(Nav, nav::view)
+    .render(model)
     // }
 }
 
@@ -180,10 +204,17 @@ fn main_view(model: &Model) -> Node<Msg> {
     match model.page.get() {
         Page::Home => home::view(model),
         Page::ButtonStyling => button_styling::view(model),
+        Page::SimpleLayout => simple_layout::view(model),
         Page::LayoutComposition => layout_composition::view(model),
         Page::Theming => theming::view(model),
         Page::ResponsiveStyling => responsive_styling::view(model),
         Page::LoadTest => thousandtest::view(model),
         Page::GettingStarted => getting_started::view(model),
+        Page::ExtendingSeed => extending_seed::view(model),
+        Page::HooksHome => hooks_home::view(model),
+        Page::HooksGettingStarted => hooks_getting_started::view(model),
+        Page::HooksApi => hooks_api::view(model),
+        Page::HooksTutorial => hooks_tutorial::view(model),
+
     }
 }

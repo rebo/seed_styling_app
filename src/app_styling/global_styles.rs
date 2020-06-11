@@ -9,7 +9,6 @@ pub fn init_styles() {
                 .webkit_font_smoothing_antialiased(),
         )
         .style("button", s().align_self_center().outline_style_none())
-        .style("html", s().box_sizing_border_box())
         .style("img", s().box_sizing_content_box())
         .style("*, *:before, *:after", s().box_sizing("inherit"))
         // make sure we never ever get horizontal scroll bars
@@ -32,6 +31,9 @@ pub fn themed_global_styles() {
         .style("a", s().color(Color::MainText))
         .style("a", s().visited().color(Color::MainText))
         .style("a", s().hover().color(Color::Primary))
+        .style("ul", s().list_style_type_disc().mt(px(8)))
+        .style("li", s().list_style_type_disc().mt(px(4)))
+        .style("p img", s().mx_auto())
         .style(
             "p code",
             s().color(Color::MainText)
@@ -63,20 +65,20 @@ pub fn themed_global_styles() {
                 .font_size(px(24)),
         )
         .style(
-            "h4",
+            "h3",
             s().font_style_italic()
                 .font_weight_v700()
                 .display_block()
                 .mt(1)
                 .mb(2)
-                .font_size(px(18)),
+                .font_size(px(24)),
         )
         .style(
             "pre",
             s().color(Color::MainText)
                 .display_flex()
                 .flex_direction_row()
-                .justify_content_center()
+                .justify_content_flex_start()
                 .width(pc(100))
                 .max_width(pc(100))
                 .overflow_x_auto()

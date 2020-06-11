@@ -16,7 +16,8 @@ is responsible for maintaining both a list of value aliases, as well as a set of
 Typically you would use a theme to control access to common values that might be applied to a variety of properties. For instance a 
 `CssColor` can be applied to a `CssBackgroundColor` and a `CssBorderColor` amongst other values.
 
-Themed values in Seed Style are fully scoped and can therefore be nested inside other components that use other themes.
+Themed values in Seed Style are fully scoped and can therefore be nested inside other components that use other themes. This means a theme
+can be neatly packaged into a component for users who wish to distribute components.
 
 Themes are an important tool in maintaining design consistency and a logical design system that means adjusting your application' style
  in a consistent manner is as painless as possible.
@@ -50,17 +51,20 @@ Once you have decided what aliases you will allow you can assign css values to t
 
 ```rust
 let theme = Theme::new("dark_theme")
+// colors
 .set_color(Color::Background, CssColor::Hex(0x333333))
 .set_color(Color::MainText, CssColor::Hex(0xDDDDDD))
 .set_color(Color::DarkPrimary, hsl(300, 70, 30))
 .set_color(Color::MutedPrimary, CssColor::Hsl(300.0, 70.0, 90.0))
 .set_color(Color::Secondary, hsl(200, 60, 40)) // or use the hsl shortcut
 .set_color(Color::MutedSecondary, hsl(200, 15, 30)) // or use the hsl shortcut
+// breakpoints
 .set_breakpoint(Breakpoint::ExtraSmall, (0, Some(600))) // Breakpoints are upper bound exclusive lower bound inclusive.
 .set_breakpoint(Breakpoint::Small, (600, Some(960)))
 .set_breakpoint(Breakpoint::Medium, (960, Some(1280)))
 .set_breakpoint(Breakpoint::Large, (1280, Some(1920)))
 .set_breakpoint(Breakpoint::ExtraLarge, (1920, None))
+// shadows
 .set_shadow(Shadow::RightEdge, "8px 0px 6px -8px #222222");
 ```
 
@@ -71,7 +75,9 @@ These aliases can then be used directly within a style property method. I.e.
 
 ```
 div![
-    s().color(Color::MainText).bg_color(Color::Background).box_shadow(Shadow::RightEdge)
+    s().color(Color::MainText)
+       .bg_color(Color::Background)
+       .box_shadow(Shadow::RightEdge)
 ]
 ```
 
@@ -83,7 +89,9 @@ This is handy if you do not want to explicitly name theme values, and also to cr
 For instance,
 
 ```
-theme.space_scale(&[px(2), px(4), px(8), px(12), px(16), px(24), px(32)])
+theme.space_scale(
+    &[px(2), px(4), px(8), px(12), px(16), px(24), px(32)]
+)
 ```
 
 sets up a Space scale these are CSS values that can be applied to properties which relate to spacing such `CssMargin`, `CssPadding` etc.
