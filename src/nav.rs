@@ -17,11 +17,11 @@ pub fn view(model: &Model) -> Node<Msg> {
             .max_height(vh(100))
             .overflow_x_visible()
             .overflow_y_auto()
-            .background_color(Color::Background)
             .padding_bottom(px(32))
             .padding_right(px(8))
             .padding_left(px(4))
             .transition("transform 0.2s ease-out 0s"),
+        s().background_color(Color::Background),
         if model.show_drawer.get() {
             s().transform("translateX(0px)")
                 .box_shadow(Shadow::RightEdge)

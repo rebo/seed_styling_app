@@ -29,7 +29,7 @@ pub fn view(model: &Model) -> Node<Msg> {
 fn main_content(model: &Model) -> Node<Msg> {
     Composition::with_layout(
     
-        Layout::grid(s().grid_template_columns("1fr minmax(400px,1000px) 1fr")),
+        Layout::grid(s().grid_template_columns("1fr minmax(0px,1000px) 1fr")),
     )
     .add_child(|model: &Model| {
         div![

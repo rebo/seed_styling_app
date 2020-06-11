@@ -91,7 +91,9 @@ pub fn view(model: &Model) -> Node<Msg> {
                 .bg_color(Color::MutedPrimary)
                 .b_width(0)
                 .b_style_solid()
-                .b_color(Color::Primary),
+                .b_color(Color::Primary)
+                .cursor_pointer(),
+            s().hover().bg_color(Color::Primary),                
             if using_dark_theme.get() {
                 "Dark Theme"
             } else {
