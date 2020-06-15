@@ -9,6 +9,7 @@ pub fn view(model: &Model) -> Node<Msg> {
     render_centred_article(model, |_| {
         div![
             h1!["Button Styling"],
+        
             p![
                 r#"Using Seed Style we can apply styles in many different ways. This page demonstrates some applications that include 
 the use of pseudo classes, media queries, and variant styling."#
@@ -316,7 +317,9 @@ fn variant_counter() -> Node<Msg> {
 
     div![
         s().display_flex().flex_direction_column(),
-        h2!["Style Variants"],
+        h2!["Style Variants"]
+
+        ,
         button![
             base_button_style, // group styles that need the same class
             "Click to swap variants of the other button",

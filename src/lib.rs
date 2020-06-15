@@ -2,6 +2,7 @@
 use seed::{prelude::*, *};
 use seed_hooks::*;
 use seed_style::*;
+use seed_style::vw;
 
 mod button_styling;
 mod compositions;
@@ -9,6 +10,7 @@ mod extending_seed;
 mod getting_started;
 mod header;
 mod home;
+mod home_style;
 mod simple_layout;
 mod layout_composition;
 mod nav;
@@ -42,6 +44,7 @@ use app_styling::theme::*;
 #[derive(Clone, PartialEq)]
 enum Page {
     Home,
+    StyleHome,
     SimpleLayout,
     LayoutComposition,
     Theming,
@@ -96,25 +99,32 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
 
     orders
         .subscribe(move |subs::UrlChanged(mut url)| {
-            match url.remaining_path_parts().as_slice() {
-                ["home"] => page.set(Page::Home),
-                ["buttons"] => page.set(Page::ButtonStyling),
-                ["theming"] => page.set(Page::Theming),
-                ["responsive_styling"] => page.set(Page::ResponsiveStyling),
-                ["load_test"] => page.set(Page::LoadTest),
-                ["simple_layout"] => page.set(Page::SimpleLayout),
-                ["layout"] => page.set(Page::LayoutComposition),
-                ["getting_started"] => page.set(Page::GettingStarted),
-                ["extending_seed"] => page.set(Page::ExtendingSeed),
-                ["hooks_home"] => page.set(Page::HooksHome),
-                ["hooks_api"] => page.set(Page::HooksApi),
-                ["hooks_tutorial"] => page.set(Page::HooksTutorial),
-                ["hooks_getting_started"] => page.set(Page::HooksGettingStarted),
-                _ => {}
+            let new_page = match url.remaining_path_parts().as_slice() {
+                ["style_home"] => Page::StyleHome,
+                ["home"] => Page::Home,
+                ["buttons"] => Page::ButtonStyling,
+                ["theming"] => Page::Theming,
+                ["responsive_styling"] => Page::ResponsiveStyling,
+                ["load_test"] => Page::LoadTest,
+                ["simple_layout"] => Page::SimpleLayout,
+                ["layout"] => Page::LayoutComposition,
+                ["getting_started"] => Page::GettingStarted,
+                ["extending_seed"] => Page::ExtendingSeed,
+                ["hooks_home"] => Page::HooksHome,
+                ["hooks_api"] => Page::HooksApi,
+                ["hooks_tutorial"] => Page::HooksTutorial,
+                ["hooks_getting_started"] => Page::HooksGettingStarted,
+                _ =>  Page::Home,
+            };
+
+            if page.get() != new_page {
+                window().scroll_to_with_x_and_y(0., 0.);
+                page.set(new_page);
             }
-            window().scroll_to_with_x_and_y(0., 0.);
             Msg::NoOp
-        })
+            }
+            // 
+        )
         .notify(subs::UrlChanged(url));
 
     // Global style resets above normalize.css
@@ -169,6 +179,7 @@ pub fn themed_view(model: &Model) -> Node<Msg> {
                     .z_index("2")
                     .position_fixed()
                     .bg_color(Color::Background)
+                    .width(vw(100))
                     .top("0px")
                     .right("0px")
                     .left("0px"),
@@ -203,6 +214,7 @@ fn main_layout(model: &Model) -> Node<Msg> {
 fn main_view(model: &Model) -> Node<Msg> {
     match model.page.get() {
         Page::Home => home::view(model),
+        Page::StyleHome => home_style::view(model),
         Page::ButtonStyling => button_styling::view(model),
         Page::SimpleLayout => simple_layout::view(model),
         Page::LayoutComposition => layout_composition::view(model),

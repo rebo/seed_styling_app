@@ -1,6 +1,6 @@
 use crate::{Model, Msg};
 use seed::{prelude::*, *};
-use seed_style::{pc, px};
+use seed_style::{pc, px,vh};
 use seed_style::*;
 use crate::Page;
 use seed_hooks::*;
@@ -14,17 +14,6 @@ enum IntroAreas {
 }
 impl LayoutArea for IntroAreas {}
 
-pub fn view(model: &Model) -> Node<Msg> {
-    use IntroAreas::*;
-
-    Composition::with_layout(
-        Layout::areas(&[&[HeroHeader], &[MainContent]])
-            .style(s().grid_template_rows("auto 1fr auto").min_height(pc(100.))),
-    )
-    .set_content(HeroHeader, |model| hero_header(model))
-    .set_content(MainContent, main_content)
-    .render(model)
-}
 
 #[view_macro]
 fn fancy_button_view<Ms>(mut root: Node<Ms>, children: Vec<Node<Ms>> )-> Node<Ms>{
@@ -48,7 +37,7 @@ fn fancy_button_view<Ms>(mut root: Node<Ms>, children: Vec<Node<Ms>> )-> Node<Ms
 }
 
 #[view_macro]
-fn center_view<Ms>(mut root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
+fn center_view<Ms>( root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
     root![
         s()
         .display_flex()
@@ -60,7 +49,37 @@ fn center_view<Ms>(mut root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
     ]
 }
 
-fn main_content(model: &Model) -> Node<Msg> {
+
+pub fn view(model: &Model) -> Node<Msg> {
+    use IntroAreas::*;
+
+    div![
+        Composition::with_layout(
+            Layout::areas(&[&[HeroHeader], &[MainContent]])
+                .style(s().grid_template_rows("auto 1fr auto").min_height(pc(100.))),
+        )
+        .set_content(HeroHeader, |model| hero_header_hooks(model))
+        .set_content(MainContent, main_content_hooks)
+        .render(model)
+    ]
+}
+
+
+#[derive(PartialEq, Eq, Clone, Debug, Hash)]
+enum HeroHeaderArea {
+    
+    Title,
+    Subtitle,
+    Empty,
+}
+
+impl LayoutArea for HeroHeaderArea {
+    fn is_empty(&self) -> bool {
+        self == &HeroHeaderArea::Empty
+    }
+}
+
+fn main_content_hooks(model: &Model) -> Node<Msg> {
     Composition::with_layout(
     
         Layout::grid(s().grid_template_columns("1fr minmax(0px,1000px) 1fr")),
@@ -163,24 +182,13 @@ md![r#"The best way to get started is to download the Seed Hooks quickstart,
     .render(model)
 }
 
-#[derive(PartialEq, Eq, Clone, Debug, Hash)]
-enum HeroHeaderArea {
-    Title,
-    Subtitle,
-    Empty,
-}
 
-impl LayoutArea for HeroHeaderArea {
-    fn is_empty(&self) -> bool {
-        self == &HeroHeaderArea::Empty
-    }
-}
-
-fn hero_header(model: &Model) -> Node<Msg> {
+fn hero_header_hooks(model: &Model) -> Node<Msg> {
     use HeroHeaderArea::*;
     div![
         s().h(px(300)).background_image("linear-gradient(purple, royalblue)")
         ,
+        a![attrs![At::Name=>"hooks"]],
         Composition::with_layout(
             Layout::areas(&[
                 &[Empty, Empty, Empty],
@@ -191,7 +199,9 @@ fn hero_header(model: &Model) -> Node<Msg> {
             .area_style(Title, s().align_self_flex_end())
             .area_style(Subtitle, s().align_self_flex_start())
         )
-        .set_content(Title, |_| div![
+
+        .set_content(Title, |_|
+        div![
             s().color(seed_colors::Base::White)
                 .font_weight_v900()
                 .font_size(px(48)),
@@ -207,3 +217,4 @@ fn hero_header(model: &Model) -> Node<Msg> {
         .render(model)
     ]
 }
+

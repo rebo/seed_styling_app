@@ -53,7 +53,7 @@ fn my_non_clone_input() -> Node<Msg> {
 }
 
 #[view_macro]
-fn center_view<Ms>(mut root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
+fn center_view<Ms>( root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
     root![
         s()
         .display_flex()

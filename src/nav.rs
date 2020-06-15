@@ -7,7 +7,11 @@ use seed_style::{px, vh};
 
 pub fn view(model: &Model) -> Node<Msg> {
     div![
-        s().position_fixed()
+        s().only_and_above(SeedBreakpoint::Small).width(px(256)).position_sticky().top(px(0)),
+    div![
+        only_and_above(SeedBreakpoint::Small, || {log!("hiding_drawer"); model.show_drawer.set(false); empty![]}),
+        s()
+            .position_fixed()
             .left(px(0))
             .top(px(64))
             .bottom(px(0))
@@ -20,26 +24,21 @@ pub fn view(model: &Model) -> Node<Msg> {
             .padding_bottom(px(32))
             .padding_right(px(8))
             .padding_left(px(4))
-            .transition("transform 0.2s ease-out 0s"),
-        s().background_color(Color::Background),
+            .transition("transform 0.2s ease-out 0s")
+            .background_color(Color::Background),
         if model.show_drawer.get() {
             s().transform("translateX(0px)")
                 .box_shadow(Shadow::RightEdge)
         } else {
             s().transform("translateX(-100%)").box_shadow("none")
         },
-        if model.page.get() == crate::Page::Home  || model.page.get() == crate::Page::HooksHome {
-            s().only_and_above(Breakpoint::Small)
-                .transform("translateX(-100%)")
-                .box_shadow("none")
-        } else {
             s().only_and_above(Breakpoint::Small)
                 .box_shadow("none")
                 .top(px(0))
                 .position_sticky()
                 .bottom_auto()
                 .transform("none")
-        },
+        ,
         div![s().pt(px(30)).font_size(px(20)).font_weight_v900(),"Seed Style"]
         ,
         ul![
@@ -53,8 +52,8 @@ pub fn view(model: &Model) -> Node<Msg> {
                 .text_decoration_none(),
             s().style_child("li").list_style_type_none(),
             li![a![
-                attrs! {At::Href => "/home"},
-                "Home",
+                attrs! {At::Href => "/style_home"},
+                "Style Home",
                 model.show_drawer.on_click(|v| *v = false)
             ]],
             li![a![
@@ -132,5 +131,6 @@ pub fn view(model: &Model) -> Node<Msg> {
                 model.show_drawer.on_click(|v| *v = false)
             ]],
         ]
+    ]
     ]
 }

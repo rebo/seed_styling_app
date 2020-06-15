@@ -11,7 +11,7 @@ use seed_style::{pc, px};
 // struct CenterArgs{}
 
 #[view_macro]
-fn center_view<Ms>(mut root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
+fn center_view<Ms>(root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
     root![
         s()
         .display_flex()
@@ -31,7 +31,7 @@ pub struct ClickToFlipSize {
 
 #[seed_hooks::topo::nested]
 #[view_macro]
-fn click_to_flip_view<Ms: 'static>(args : ClickToFlipSize, mut root: Node<Ms>, children: Vec<Node<Ms>>,mut front: Node<Ms>, mut back: Node<Ms>) -> Node<Ms> {
+fn click_to_flip_view<Ms: 'static>(args : ClickToFlipSize,  root: Node<Ms>, children: Vec<Node<Ms>>,mut front: Node<Ms>, mut back: Node<Ms>) -> Node<Ms> {
     let flip = use_state(|| false);
     let card_style = s()
         .position_absolute()

@@ -8,7 +8,7 @@ use crate::app_styling::theme::*;
 use web_sys::{HtmlElement, HtmlTextAreaElement};
 
 #[view_macro]
-fn center_view<Ms>(mut root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
+fn center_view<Ms>( root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
     root![
         s()
         .display_flex()
@@ -424,6 +424,9 @@ fn markdown_editor() -> Node<Msg> {
 The reason we annotate with `#[topo::nested]` is so that `markdown_editor` can operate as its own component with local state. 
 
 Style wise, it lays out a column of two rows, the first row contains two columns for the markdown input and the preview pane.  The second row aligns a submit button to the right.
+`Row!` and `Column!` are basic UI macros helpers that assist with column layout, they are essentially a flex div wrapped in a grid.
+Often a `Row!` or `Column!` are flex items and therefore need a flex property to be set.
+
 Note that `Row!` and `Column!` are both flex grow with zero basis. Which means they fill their container as much as possible.
 This is why we set `Flex::None` on the title and button rows because we don't want them to grow.
 
