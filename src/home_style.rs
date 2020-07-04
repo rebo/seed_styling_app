@@ -130,7 +130,7 @@ md![r#"The best way to get started is to download the Seed Style quickstart,
  this targets current Seed master and includes `seed_style_preview`
  
  ```
- git clone https://github.com/rebo/seed_styling_quickstart
+ git clone https://github.com/rebo/seed-style-quickstart-basic
  cd seed-styling-quickstart
  cargo make start
 ```

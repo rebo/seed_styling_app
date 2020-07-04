@@ -25,7 +25,7 @@ mod hooks_tutorial;
 
 
 mod app_styling;
-use app_styling::global_styles::{init_styles, themed_global_styles};
+use app_styling::global_styles::{init_styles,themed_global_styles};
 use app_styling::theme::*;
 
 // This app shows how to use most features of a proposed styling system for Seed.
@@ -94,6 +94,8 @@ fn update(msg: Msg, _model: &mut Model, orders: &mut impl Orders<Msg>) {
 // init sets up simple routing, global CSS styles for css resets,
 // and window resizing callback
 fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
+    
+    load_app_themes(&[default_colors_theme, default_breakpoint_theme, my_theme]);
     // setup a page state accessor, which is modified as part of a Url Changed subscription
     let page = use_state(|| Page::Home);
 
@@ -133,7 +135,7 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
 
     // We subscribe to a window resize event in the init in order to handle window resizing
     orders.stream(streams::window_event(Ev::Resize, |_| Msg::WindowResized));
-
+    themed_global_styles().get();
     // Our model just needs the state accessors for page, show_drawer, and themes
     Model {
         page,
@@ -157,14 +159,7 @@ impl LayoutArea for AppAreas {}
 
 #[topo::nested]
 pub fn view(model: &Model) -> Node<Msg> {
-    // ensure our app is themed, _mut enables theme to be changed.
-    use_themes(
-        || vec![style_presets(), my_theme()],
-        || {
-            themed_global_styles();
-            themed_view(model)
-        },
-    )
+    themed_view(model)
 }
 
 pub fn themed_view(model: &Model) -> Node<Msg> {

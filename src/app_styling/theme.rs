@@ -22,7 +22,7 @@ use seed_style::*;
 // In order to use css value aliases we use an enum.
 //
 // // Main Color Theme Keys
-#[derive(Hash, PartialEq, Eq, Clone)]
+#[derive(Hash, PartialEq, Eq, Clone, Debug)]
 pub enum Color {
     Background,
     MainText,

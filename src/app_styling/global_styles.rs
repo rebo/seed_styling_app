@@ -1,8 +1,9 @@
 use super::theme::*;
 use seed_style::*;
+use seed_hooks::*;
 
 pub fn init_styles() {
-    GlobalStyle::default()
+    GlobalStyle::new()
         .style(
             "a,ul,li,div,p,h1,h2,h3,h4,li,dd,dt,button,label,input",
             s().font_family("'Lato',sans-serif")
@@ -16,8 +17,10 @@ pub fn init_styles() {
         .activate_init_styles()
 }
 
-pub fn themed_global_styles() {
-    GlobalStyle::default()
+#[reaction]
+pub fn themed_global_styles() -> () {
+    app_themes().on_update( ||
+    GlobalStyle::new()
         .style(
             "p",
             s().line_height(CssLineHeight::Number(1.6))
@@ -103,5 +106,7 @@ pub fn themed_global_styles() {
                 .radius(px(5))
                 .font_size(&[px(14), px(18)]),
         )
-        .activate_styles();
+        .activate_styles());
+    
+        
 }

@@ -92,7 +92,7 @@ fn main_content_hooks(model: &Model) -> Node<Msg> {
                 .padding_x(3)
                 .padding_y(2),
             p![
-                "Easily implement per component state in your Seed apps to create re-usable interactive views."
+                "Easily implement global reactive state as well as local component state in your Seed apps to create re-usable interactive views."
             ],
             center![
                 {
@@ -106,12 +106,30 @@ fn main_content_hooks(model: &Model) -> Node<Msg> {
             ],
             md![r#"
 
+### Local State
+
 ```
 let counter = use_state(||1337);
 
 fancy_button![
     "Seed Rocks ", counter, " times!",
     counter.on_click(|c| *c+=1),
+]
+```
+
+### Global Reactive State
+
+```
+#[atom]
+fn global_count() -> u32 {
+    0
+}
+
+... somewhere in your app...
+
+fancy_button![
+    "Seed Rocks ", global_count, " times!",
+    global_count.on_click(|c| *c+=1),
 ]
 ```
 

@@ -69,11 +69,11 @@ pub fn view(_model: &Model) -> Node<Msg> {
         md![r#"
 # Getting Started
 
-Seed Hooks is a comprehensive component state solution for Seed apps. With Seed Hooks you can create customisatble, re-usable and interactive components.
+Seed Hooks is a comprehensive component and global reactive state solution for Seed apps. With Seed Hooks you can create customisatble, re-usable and interactive components.
 
-It is primarily influenced by React Hooks but also has some features from View and Svelte, for instance easy form input binding.
+It is primarily influenced by React Hooks, MobX and RecoilJs, but also has some features from Vue and Svelte, for instance easy form input binding.
 
-Want to create interactive web apps with re-usable components? let's dive right in!
+Want to create interactive web apps with re-usable reactive components? let's dive right in!
 
 ## Setting up the app environment.
 
@@ -84,7 +84,13 @@ Then in the terminal type
 ```
 > git clone https://github.com/rebo/seed-hooks-quickstart.git
 > cd seed-hooks-quickstart
+> cargo make serve
+> Open a second terminal tab and run: cargo make watch
 ```
+
+This will auto recompile and re-serve your app when you save changes to your app.
+
+Notes: 
 
 To run this quickstart project you need cargo-make installed:
 
@@ -128,10 +134,11 @@ In order to enable **Seed Hooks** add the following to `Cargo.toml` in the `[dep
 ```
 // In Cargo.toml...
 
-seed_hooks = "0.1.3"
+seed_hooks = "0.1.4"
 ```
 
-Next, Seed hooks rely on the nightly `TrackCaller` feature you need to add the `#![feature(track_caller)]` feature flag to the top of `lib.rs`.
+Next, Seed hooks rely on the nightly `TrackCaller` feature you need to add the `#![feature(track_caller)]` feature flag to the top of `lib.rs`. 
+This feature has been stablized since 2nd July 2020, therefore any nightly after this time will not need this feature flag.
 
 You should also glob import the `seed_hooks` crate with:
 
@@ -189,7 +196,7 @@ pub fn start() {
 }
 
 ```
-## Creating a simple button counter
+## Creating a simple button counter with local state
 
 Modify the `view` function in `lib.rs` to now read this:
 
@@ -206,7 +213,7 @@ fn view(_model: &Model) -> impl View<Msg> {
 Re-compiling the quickstart with `cargo make serve` in the console, and then navigating to `http://localhost:8000` will show
 a single zero and nothing else.
 
-So what's going on? the initial render line `let count = use_state(||0);` creates an integer **state variable** 
+So what's going on? the initial render line `let count = use_state(||0);` creates an integer local **state variable** 
 this state is registered and stored in a thread local data structure.  The `use_state` function returns a `StateAccess<u32>`
 which can be used for (amongst other things), displaying the state, updating the state and managing the states lifetime.
 
@@ -267,5 +274,96 @@ Styled example:
         ]
     
 }
+,
+md![r###" 
+
+## Creating a simple form with reactive global state
+
+Seed already has global state, the `Model` that gets updated in the `update` function. For most circumstances this `Model` based global state will
+be perfectly suitable for almost all needs.
+
+That said there are some circumstances where the monolithic `Model` paradigm can be improved.
+
+1) When one needs to use shared values in very distant parts of the UI tree which may not receive the `Model` as an argument.
+2) When it is useful to create have components that react to specific state changes.
+3) When it is helpful to cache parts of the UI tree instead of re-generating them each render frame.
+
+Seed Hooks' reactive state can help in these circumstances.
+
+## Atoms and Reactions
+
+Seed Hooks' reactive state is based primarily on three principles atoms, reactions and observations. 
+
+An `atom` is a single piece of global state. The only way to change an atom's state is by use of an `update` or `set` method, much in the same way local hooks state is mutated.
+
+`Reaction`s subscribe to an `atom` and cache their output whenever the atom they are subscribed to is mutated.  This is achieved by using the `observe()` method on an
+`atom` or another `reaction`. By chaining together reactions you can create a reactive state graph that incrementally builds a UI based on changes to underlying state.
+
+Add the following function to lib.rs:
+
+```rust
+#[atom]
+fn name() -> String {
+    "".to_string()
+}
+
+#[reaction]
+fn name_form() -> Vec<Node<Msg>> {
+    let form_name = name().observe();
+    nodes![
+        p!["Enter your name"],
+        input![
+            attrs!{ At::Value => form_name },
+            input_ev(Ev::Input, |inp| 
+                name().update(|n| *n = inp.to_string())
+            ),
+        ],
+        h2!["Hello ", form_name]
+    ]
+}
+```
+
+Now whereever you use `name_form()` you will the form render with shared state.  What is interesting about this is that the form's `Node<Msg>` structure is only being created
+once yet can be used many times throughout an application. This has some performance improvements to large apps with complex views. Therefore add `name_form()` to the bottom of your view
+function:
+
+```rust
+#[topo::nested]
+fn view(_model: &Model) -> impl View<Msg> {
+    let count = use_state(||0);
+    div![
+        count,
+        name_form(),
+    ]
+}
+```
+
+and restart your application. The form will now accept input and echo a respsonse.
+
+Styled Example: 
+"###]
+,
+name_form()
+,
 ]
+}
+
+    
+#[atom]
+fn name() -> String {
+    "".to_string()
+}
+
+#[reaction]
+fn name_form() -> Vec<Node<Msg>> {
+    let form_name = name().observe();
+    nodes![
+        p!["Enter your name"],
+        input![
+            s().b_color(seed_colors::Gray::No4).b_style_solid().b_width(px(2)),
+            attrs!{At::Value => form_name },
+            input_ev(Ev::Input, |inp| name().update(|n| *n = inp.to_string())),
+        ],
+        h2!["Hello ", form_name]
+    ]
 }

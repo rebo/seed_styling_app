@@ -32,7 +32,7 @@ pub fn render_centred_article<F: Fn(&Model) -> Node<Msg> + 'static>(
     .add_style(s().style_descendant("button").align_self_center())
     .add_child(move |model: &Model| {
         div![
-            only_and_above(SeedBreakpoint::Small, || {log!("hiding_drawer");model.show_drawer.set(false); empty![]}),
+            only_and_above(SeedBreakpoint::Small, || {model.show_drawer.set(false); empty![]}),
             s().grid_column_start("2")
                 .grid_column_end("3")
                 .padding_x(3)

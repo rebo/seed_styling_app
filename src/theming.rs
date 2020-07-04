@@ -16,9 +16,6 @@ is responsible for maintaining both a list of value aliases, as well as a set of
 Typically you would use a theme to control access to common values that might be applied to a variety of properties. For instance a 
 `CssColor` can be applied to a `CssBackgroundColor` and a `CssBorderColor` amongst other values.
 
-Themed values in Seed Style are fully scoped and can therefore be nested inside other components that use other themes. This means a theme
-can be neatly packaged into a component for users who wish to distribute components.
-
 Themes are an important tool in maintaining design consistency and a logical design system that means adjusting your application' style
  in a consistent manner is as painless as possible.
 
@@ -125,27 +122,18 @@ Uses the `Primary` color theme for the background colour, but if its not been se
 
 ## Accessing and scoping themes
 
-You need to ensure your thee is in-scope in order to access the CSS values that it stores. This is to enable nesting of themes and allow 
-say a sub-component to have its own defined themes.
+You need to ensure your thee is in-scope in order to access the CSS values that it stores.
 
-Access is governed by the `use_themes()` function and it is often the first expression in the main app view function.
+Access is governed by the `load_app_themes()` function and declared within the `init` function.
 
 ```rust
-use_themes(
-    || vec![style_presets(), my_theme()],
-    || {
-        themed_global_styles();
-        ... themeable content here....
-    },
-)
+fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
+     load_app_themes(&[default_colors_theme, default_breakpoint_theme, my_theme]);  // loads the selected themes
+     themed_global_styles().get(); // ensures global themes are reloaded is a theme is swapped 
+    ....
+    ....
+
 ```
 
-You need to pass it a vec of themes to apply as the first argument, and the content to render as the second argument. Please note that these are 
-passed as closures so that themes do not need to be instantiated on every render.
-
-Anything in the second argument closure will have access to the provided theme.
-
-Often it is useful to also register global styles just inside this second block. This ensures that your global styles are registered and updated 
-with the relevant theme values.
 "#],]
 }

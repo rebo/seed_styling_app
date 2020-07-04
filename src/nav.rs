@@ -9,7 +9,7 @@ pub fn view(model: &Model) -> Node<Msg> {
     div![
         s().only_and_above(SeedBreakpoint::Small).width(px(256)).position_sticky().top(px(0)),
     div![
-        only_and_above(SeedBreakpoint::Small, || {log!("hiding_drawer"); model.show_drawer.set(false); empty![]}),
+        only_and_above(SeedBreakpoint::Small, || { model.show_drawer.set(false); empty![]}),
         s()
             .position_fixed()
             .left(px(0))

@@ -6,7 +6,7 @@ use seed_style::{px,pc,rgba, ExactLength};
 use seed_style::*;
 use crate::app_styling::theme::*;
 use web_sys::{HtmlElement, HtmlTextAreaElement};
-
+use atom_state::*;
 
 #[view_macro]
 fn center_view<Ms>( root: Node<Ms>, children: Vec<Node<Ms>>) -> Node<Ms> {
@@ -63,7 +63,7 @@ fn md_source()->String{
 #[topo::nested]
 fn markdown_editor(on_submit: impl FnOnce(String) -> Msg + 'static + Clone) -> Node<Msg>{
   
-    let source = md_source().observe();
+    let source = observe(md_source());
     
     
 
@@ -92,7 +92,7 @@ fn markdown_editor(on_submit: impl FnOnce(String) -> Msg + 'static + Clone) -> N
                     class!["markdown-body"],  
                     md![&source],
                     el_ref(&preview_el.get()),
-                    s().overflow_auto().p(px(4)).b_color("gray").bg_color("white").b_width(px(1)).b_style_solid().h(pc(100)),
+                    s().overflow_auto().p(px(4)).b_color("gray").bg_color("gray").b_width(px(1)).b_style_solid().h(pc(100)),
                 ]
             ]
         ],    
@@ -184,7 +184,7 @@ fn big_button_view<Ms : 'static>(args: AdditionalStyles,  root: Node<Ms>, childr
 
 #[reaction]
 fn modal() -> Node<Msg> {
-    if let Some(content) =modal_content().observe(){
+    if let Some(content) = observe(modal_content()){
         div![
             div![
                 div![
@@ -204,7 +204,7 @@ fn modal() -> Node<Msg> {
                 // C.fixed, C.inset_0, C.z_50, C.overflow_auto, C.flex,
             div![
                 s().position_relative().px(px(40)).py(px(24))
-                .bg_color("white")
+                .bg_color("gray")
                 .w(pc(80)).max_w(px(700))
                 .m_auto()
                 .display_flex()
@@ -230,12 +230,13 @@ fn modal() -> Node<Msg> {
                                 attrs! {At::Type => "button"},
                                 
                                     s().mx(px(4))
-                                    .bg_color(seed_colors::Red::No4)
-                                    .color(seed_colors::Base::White)
+                                    .bg_color("gray")
+                                    .color("gray")
                                     .font_weight_v900()
                                     .py(px(4))
                                     .px(px(8))
-                                    .bb_width(px(4)).bg_color(seed_colors::Red::No7)
+                                    .bb_width(px(4))
+                                    .b_color("gray")
                                     .radius(px(6))  ,
                                     s().hover().bg_color("gray")
 
@@ -311,7 +312,7 @@ fn use_state_example() -> Node<Msg> {
         count.get().to_string(),
         button!["Increase Count",  s()
             .mx(px(8))
-            .bg_color(seed_colors::Gray::No4)
+            .bg_color("#AAA")
             
             .font_weight_v900()
             .py(px(4))
@@ -1175,8 +1176,8 @@ fn show_editor() -> bool {
 
 #[reaction]
 fn modal_content() -> Option<Node<Msg>> {
-   if show_editor().observe() {
-        Some(md_view().observe())
+   if observe(show_editor()) {
+        Some(observe(md_view()))
    } else {
        None
    }

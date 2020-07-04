@@ -30,8 +30,11 @@ Then in the terminal type
 ```
 > git clone https://github.com/rebo/seed-style-quickstart-basic
 > cd seed-styling-quickstart-basic
-> cargo make start
+> cargo make serve
+> Open a second terminal tab and run: cargo make watch
 ```
+
+This will auto recompile and re-serve your app when you save changes to your app.
 
 Visit `http://localhost:8000` and you will see the basic quickstart home page.
 
@@ -58,14 +61,14 @@ This `Style` object is responsible for updating the DOM and ensuring all styles 
 The argument to `font_size()` is `px(24)` which is a helper method that creates an `ExactLength` which the `font_size()` method accepts.
 However we can use many different arguments to our property methods, including:
 
-a) A typed Css value such as a `CssColor` enum.  
-b) A typed measurement, `ExactLength`, for properties that expect a measure.  
-c) A helper function that creates one of the above, e.g. `rgb()` , `hsl()` or `px()` etc.  
-d) A theme alias, such as `Color::DarkPrimary`.  
-e) An array that can set breakpoint dependent values.  
-f) An array that can set breakpoint dependent values at defined scales.  
-g) An integer that chooses a value from a theme scale.  
-h) A plain `'static &str`.  
+a) A typed Css value such as a `CssColor` enum. e.g `s().color(CssColor::Rgba(255., 0., 0., 1.))`
+b) A typed measurement, `ExactLength`, for properties that expect a measure.  e.g `s().margin(ExactLength{unit: Unit::Px, value: NotNan::new(2.0).unwrap()})
+c) A helper function that creates one of the above, e.g. `rgb()` , `hsl()` or `px()` etc.  e.g. `s().margin(px(2))` or `s().color(rgb(255,0,0))`
+d) A theme alias, such as `Color::DarkPrimary`.  e.g. `s().color(Color::DarkPrimary)`
+e) An array that can set breakpoint dependent values.  e.g. `s().font_size(&[px(12),px(14),px(18)])`
+f) An array that can set breakpoint dependent values at defined scales.  `s().font_size(&[1,3,5])`
+g) An integer that chooses a value from a theme scale.   `s().font_size(2)`
+h) A plain `'static &str`.   `s().font_size("12px")`
 
 "#],
         div![
@@ -90,7 +93,7 @@ users can therefore extend Seed Style by implementing `UpdateStyle` to process a
 ## Basic themes
 
 Seed Style includes comprehensive theming capabilities, which enables common values to be set and re-used throughout your application. Our themes
-conform to the "Theme Specification" which is means we use a `Theme` object to store styles and values. Add the following style to the above
+conform to the "Theme Specification" which  means we use a `Theme` object to store styles and values. Add the following style to the above
 code:
 
 ```rust
@@ -107,7 +110,7 @@ pub fn themed_view(_model: &Model) -> Node<Msg> {
 ```
 
 This will set the text color to the primary color set in `themes.rs`. It will also set the border color to the color described by `seed_colors::Red::No4` 
-this color is a preset color that can be made available if the `style_presets()` theme is used.
+this color is a preset color that can be made available if the `default_colors_theme()` theme is used.
 
 ## Global Styles       
 
