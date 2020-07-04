@@ -14,6 +14,7 @@ pub fn init_styles() {
         .style("*, *:before, *:after", s().box_sizing("inherit"))
         // make sure we never ever get horizontal scroll bars
         .style("body", s().max_width(vw(100)))
+        .style("ul,ol", s().list_style_position_inside().pl(px(8)))
         .activate_init_styles()
 }
 

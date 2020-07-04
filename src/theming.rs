@@ -129,7 +129,7 @@ Access is governed by the `load_app_themes()` function and declared within the `
 ```rust
 fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
      load_app_themes(&[default_colors_theme, default_breakpoint_theme, my_theme]);  // loads the selected themes
-     themed_global_styles().get(); // ensures global themes are reloaded is a theme is swapped 
+     themed_global_styles().get(); // ensures global themes are reloaded if a theme is swapped at runtime.
     ....
     ....
 
