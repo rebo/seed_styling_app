@@ -317,7 +317,7 @@ fn name_form() -> Vec<Node<Msg>> {
         input![
             attrs!{ At::Value => form_name },
             input_ev(Ev::Input, |inp| 
-                name().update(|n| *n = inp )
+                name().set(inp)
             ),
         ],
         h2!["Hello ", form_name]
@@ -364,7 +364,7 @@ fn name_form() -> Vec<Node<Msg>> {
         input![
             s().b_color(seed_colors::Gray::No4).b_style_solid().b_width(px(2)),
             attrs!{At::Value => form_name },
-            input_ev(Ev::Input, |inp| name().update(|n| *n = inp)),
+            input_ev(Ev::Input, |inp| name().set(inp))
         ],
         h2!["Hello ", form_name]
     ]
